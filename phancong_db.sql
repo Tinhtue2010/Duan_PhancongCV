@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Mar 16, 2025 at 08:03 AM
+-- Generation Time: Mar 16, 2025 at 08:24 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,13 +37,6 @@ CREATE TABLE `bo_phan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `bo_phan`
---
-
-INSERT INTO `bo_phan` (`ma_bo_phan`, `ten_bo_phan`, `chuc_nang_nhiem_vu`, `thoi_gian_thanh_lap`, `thoi_gian_giai_the`, `trang_thai`) VALUES
-('BP01', '123', '345', '2025-03-11', '2025-03-14', '1');
-
---
 -- Triggers `bo_phan`
 --
 DELIMITER $$
@@ -52,9 +45,9 @@ CREATE TRIGGER `before_insert_bo_phan` BEFORE INSERT ON `bo_phan` FOR EACH ROW B
     DECLARE next_ma VARCHAR(10);
 
     -- Get the numeric part of the last inserted ID
-    SELECT COALESCE(MAX(CAST(SUBSTRING(ma_bo_phan, 2) AS UNSIGNED)), 0) + 1 
-    INTO next_id FROM bo_phan;
+    SELECT COALESCE(MAX(CAST(SUBSTRING(ma_bo_phan, 3) AS UNSIGNED)), 0) + 1 INTO next_id FROM bo_phan;
 
+    -- Format it as HQxxx (e.g., HQ001, HQ002)
     SET next_ma = CONCAT('BP', LPAD(next_id, 2, '0'));
 
     -- Assign the generated ID
@@ -84,7 +77,8 @@ CREATE TABLE `can_bo` (
 --
 
 INSERT INTO `can_bo` (`ma_can_bo`, `ma_bo_phan`, `ten_can_bo`, `chuc_danh`, `trang_thai`, `ma_tai_khoan`, `nhom_vi_tri_lam_viec`) VALUES
-('HQ001', 'BP01', 'Trần Đạt a', '5', 1, 2, '');
+('HQ001', 'BP01', 'Trần Đạt a', '5', 1, 2, ''),
+('HQ002', '12', '1', '1', 1, 1, '1');
 
 --
 -- Triggers `can_bo`
