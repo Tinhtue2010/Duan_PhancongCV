@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TaiKhoanController;
 use App\Http\Controllers\CanBoController;
+use App\Http\Controllers\BaoCaoController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home-page');
@@ -25,7 +26,12 @@ Route::middleware([\App\Http\Middleware\CheckRoleAdmin::class])->group(function 
         Route::post('/xoa-can-bo', [CanBoController::class, 'xoaCanBo'])->name('xoa-can-bo');
     });
 });
+
 Route::name('tai-khoan.')->group(function () {
     Route::get('/thay-doi-mat-khau', [TaiKhoanController::class, 'thayDoiMatKhau'])->name('thay-doi-mat-khau');
     Route::post('/thay-doi-mat-khau-submit', [TaiKhoanController::class, 'thayDoiMatKhauSubmit'])->name('thay-doi-mat-khau-submit');
+});
+Route::name('export.')->group(function () {
+    Route::get('/bao-cao-hang-ton', [BaoCaoController::class, 'index'])->name('bao-cao-hang-ton');
+    Route::get('/hang-ton-doanh-nghiep', [BaoCaoController::class, 'hangTonDoanhNghiep'])->name('hang-ton-doanh-nghiep');
 });
