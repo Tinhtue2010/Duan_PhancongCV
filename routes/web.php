@@ -22,13 +22,9 @@ Route::middleware([\App\Http\Middleware\CheckRoleAdmin::class])->group(function 
         Route::post('/them-tai-khoan', [TaiKhoanController::class, 'themTaiKhoan'])->name('them-tai-khoan');
         Route::post('/update-tai-khoan', [TaiKhoanController::class, 'updateTaiKhoan'])->name('update-tai-khoan');
         Route::post('/xoa-tai-khoan', [TaiKhoanController::class, 'xoaTaiKhoan'])->name('xoa-tai-khoan');
-
-        Route::get('/quan-ly-can-bo', [CanBoController::class, 'danhSachCanBo'])->name('danh-sach-can-bo');
-        Route::post('/them-can-bo', [CanBoController::class, 'themCanBo'])->name('them-can-bo');
-        Route::post('/update-can-bo', [CanBoController::class, 'updateCanBo'])->name('update-can-bo');
-        Route::post('/xoa-can-bo', [CanBoController::class, 'xoaCanBo'])->name('xoa-can-bo');
     });
 });
+
 Route::middleware([\App\Http\Middleware\CheckRoleCanBo::class])->group(function () {
     Route::name('bo-phan.')->group(function () {
         Route::get('/quan-ly-bo-phan', [BoPhanController::class, 'danhSachBoPhan'])->name('danh-sach-bo-phan');
@@ -43,10 +39,17 @@ Route::middleware([\App\Http\Middleware\CheckRoleCanBo::class])->group(function 
         Route::post('/xoa-dieu-chuyen', [DieuChuyenController::class, 'xoaDieuChuyen'])->name('xoa-dieu-chuyen');
     });
 });
+Route::name('can-bo.')->group(function () {
+    Route::get('/quan-ly-can-bo', [CanBoController::class, 'danhSachCanBo'])->name('danh-sach-can-bo');
+    Route::post('/them-can-bo', [CanBoController::class, 'themCanBo'])->name('them-can-bo');
+    Route::post('/update-can-bo', [CanBoController::class, 'updateCanBo'])->name('update-can-bo');
+    Route::post('/xoa-can-bo', [CanBoController::class, 'xoaCanBo'])->name('xoa-can-bo');
+});
 
 
-Route::get('demo',[DemoController::class,'index']);
-Route::get('demo2',[DemoController::class,'demo2']);
+
+Route::get('demo', [DemoController::class, 'index']);
+Route::get('demo2', [DemoController::class, 'demo2']);
 Route::name('tai-khoan.')->group(function () {
     Route::get('/thay-doi-mat-khau', [TaiKhoanController::class, 'thayDoiMatKhau'])->name('thay-doi-mat-khau');
     Route::post('/thay-doi-mat-khau-submit', [TaiKhoanController::class, 'thayDoiMatKhauSubmit'])->name('thay-doi-mat-khau-submit');
