@@ -3,10 +3,12 @@
 use App\Http\Controllers\TaiKhoanController;
 use App\Http\Controllers\CanBoController;
 use App\Http\Controllers\BaoCaoController;
-use App\Http\Controllers\BoPhanController;
+use App\Http\Controllers\DemoController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home-page');
+Route::view('/lien-he', 'lien-he');
+Route::get('/danh-sach-lien-he', [TaiKhoanController::class, 'danhSachLienHe'])->name('danh-sach-lien-he');
 Route::post('/lien-he-submit', [TaiKhoanController::class, 'lienHeSubmit'])->name('lien-he-submit');
 Route::get('/dang-nhap', [TaiKhoanController::class, 'dangNhap'])->name('login');
 Route::post('/submit-dang-nhap', [TaiKhoanController::class, 'submitDangNhap'])->name('submit-dang-nhap');
@@ -23,14 +25,9 @@ Route::middleware([\App\Http\Middleware\CheckRoleAdmin::class])->group(function 
         Route::post('/them-can-bo', [CanBoController::class, 'themCanBo'])->name('them-can-bo');
         Route::post('/update-can-bo', [CanBoController::class, 'updateCanBo'])->name('update-can-bo');
         Route::post('/xoa-can-bo', [CanBoController::class, 'xoaCanBo'])->name('xoa-can-bo');
-    
-        Route::get('/quan-ly-bo-phan', [BoPhanController::class, 'danhSachBoPhan'])->name('danh-sach-bo-phan');
-        Route::post('/them-bo-phan', [BoPhanController::class, 'themBoPhan'])->name('them-bo-phan');
-        Route::post('/update-bo-phan', [BoPhanController::class, 'updateBoPhan'])->name('update-bo-phan');
-        Route::post('/xoa-bo-phan', [BoPhanController::class, 'xoaBoPhan'])->name('xoa-bo-phan');
     });
 });
-
+Route::get('demo',[DemoController::class,'index']);
 Route::name('tai-khoan.')->group(function () {
     Route::get('/thay-doi-mat-khau', [TaiKhoanController::class, 'thayDoiMatKhau'])->name('thay-doi-mat-khau');
     Route::post('/thay-doi-mat-khau-submit', [TaiKhoanController::class, 'thayDoiMatKhauSubmit'])->name('thay-doi-mat-khau-submit');
