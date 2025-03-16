@@ -46,5 +46,4 @@ Route::name('tai-khoan.')->group(function () {
 });
 Route::name('export.')->group(function () {
     Route::get('/bao-cao-hang-ton', [BaoCaoController::class, 'index'])->name('bao-cao-hang-ton');
-    Route::get('/hang-ton-doanh-nghiep', [BaoCaoController::class, 'hangTonDoanhNghiep'])->name('hang-ton-doanh-nghiep');
 });
