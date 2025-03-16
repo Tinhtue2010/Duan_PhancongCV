@@ -14,7 +14,7 @@ class User extends Authenticatable
     protected $fillable = [
         'ten_dang_nhap',
         'mat_khau',
-        'loai_tai_khoan',
+        'quyen_han',
     ];
 
     protected $hidden = [

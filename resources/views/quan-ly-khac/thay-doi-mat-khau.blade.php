@@ -31,18 +31,18 @@
                             {{ Auth::user()->ten_dang_nhap ?? '' }}</label>
                         <br>
                         <label class="label-text fw-bold" for="">- Loại tài khoản :
-                            {{ Auth::user()->loai_tai_khoan ?? '' }}</label>
+                            {{ Auth::user()->quyen_han ?? '' }}</label>
                         <br>
                         <label class="label-text fw-bold" for="">- Mã tài khoản :
                             {{ Auth::user()->ma_tai_khoan ?? '' }}</label>
                         <br>
-                        @if (Auth::user()->loai_tai_khoan == 'Cán bộ')
+                        @if (Auth::user()->quyen_han == 'Cán bộ')
                             <label class="label-text fw-bold" for=""> - Mã công chức :
                                 {{ Auth::user()->canBo->ma_can_bo ?? '' }}</label>
                             <br>
                             <label class="label-text fw-bold" for=""> - Tên công chức :
                                 {{ Auth::user()->canBo->ten_can_bo ?? '' }}</label>
-                        @elseif(Auth::user()->loai_tai_khoan == 'Doanh nghiệp')
+                        @elseif(Auth::user()->quyen_han == 'Doanh nghiệp')
                             <label class="label-text fw-bold" for=""> - Mã doanh nghiệp :
                                 {{ Auth::user()->doanhNghiep->ma_doanh_nghiep ?? '' }}</label>
                             <br>

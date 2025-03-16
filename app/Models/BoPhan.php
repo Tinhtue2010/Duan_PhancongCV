@@ -9,8 +9,11 @@ class BoPhan extends Model
     protected $connection = 'mysql';
     protected $table = 'bo_phan';
     protected $primaryKey = 'ma_bo_phan';
-    public $incrementing = false; // Ensure this is false if your primary key is not auto-incrementing
-    protected $keyType = 'string'; // This is important if the key is a string like '61PA'}
+    public $incrementing = false; 
+    protected $keyType = 'string';
+
+    public $timestamps = false;
+
     protected $fillable = [
         'ma_bo_phan',
         'ten_bo_phan',
@@ -19,10 +22,6 @@ class BoPhan extends Model
         'thoi_gian_giai_the',
         'trang_thai',
     ];
-    // public function taiKhoan()
-    // {
-    //     return $this->hasMany(PhanQuyenBaoCao::class, 'ma_can_bo', 'ma_can_bo');
-    // }
 
     public function taiKhoan()
     {

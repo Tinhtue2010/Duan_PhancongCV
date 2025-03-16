@@ -27,13 +27,13 @@ class TaiKhoanController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-            if ($user->loai_tai_khoan == "Cán bộ") {
+            if ($user->quyen_han == "Cán bộ") {
                 if (!CanBo::where('ma_tai_khoan', Auth::user()->ma_tai_khoan)->first()) {
                     session()->flash('alert-danger', 'Tài khoản này chưa được gán cho cán bộ nào');
                     return redirect()->back();
                 }
                 return redirect()->route('nhap-hang.quan-ly-nhap-hang');
-            } elseif ($user->loai_tai_khoan == "Admin") {
+            } elseif ($user->quyen_han == "Admin") {
                 return redirect()->route('quan-ly-khac.danh-sach-can-bo');
             }
         }
@@ -61,15 +61,15 @@ class TaiKhoanController extends Controller
             session()->flash('alert-danger', 'Tên đăng nhập này đã tồn tại.');
             return redirect()->back();
         }
-        if ($request->loai_tai_khoan == 'Công chức') {
-            $loai_tai_khoan = 'Cán bộ';
+        if ($request->quyen_han == 'Công chức') {
+            $quyen_han = 'Cán bộ';
         } else {
-            $loai_tai_khoan = $request->loai_tai_khoan;
+            $quyen_han = $request->quyen_han;
         }
         TaiKhoan::create([
             'ten_dang_nhap' => $request->ten_dang_nhap,
             'mat_khau' => Hash::make(value: $request->mat_khau),
-            'loai_tai_khoan' => $loai_tai_khoan,
+            'quyen_han' => $quyen_han,
         ]);
         session()->flash('alert-success', 'Thêm tài khoản mới thành công');
         return redirect()->back();

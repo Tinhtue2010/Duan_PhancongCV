@@ -41,7 +41,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="courseDropdown">
                             @if (Auth::user())
-                                @if (Auth::user()->loai_tai_khoan == 'Cán bộ')
+                                @if (Auth::user()->quyen_han == 'Cán bộ')
                                     <li>
                                         <hr class="dropdown-divider">
                                         <strong class="ms-3">Hướng dẫn công chức</strong>

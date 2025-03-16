@@ -12,7 +12,7 @@ class DieuChuyen extends Model
     protected $fillable = [
         'ma_dieu_chuyen',
         'ma_can_bo',
-        'thoi_gian',
+        'thoi_gian_dieu_chuyen',
         'ma_bo_phan_chuyen_den',
         'chuc_danh_moi',
         'ly_do',
