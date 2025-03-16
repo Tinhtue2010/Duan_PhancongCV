@@ -28,8 +28,10 @@
                             <h4 class="font-weight-bold text-primary">Danh sách cán bộ</h4>
                         </div>
                         <div class="col-3">
-                            <button data-bs-toggle="modal" data-bs-target="#themModal"
-                                class="btn btn-success float-end">Thêm cán bộ mới</button>
+                            @if (Auth::user()->quyen_han === 'CBQL2' || Auth::user()->quyen_han === 'Admin')
+                                <button data-bs-toggle="modal" data-bs-target="#themModal"
+                                    class="btn btn-success float-end">Thêm cán bộ mới</button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -58,9 +60,11 @@
                                 <th>
                                     Trạng thái
                                 </th>
-                                <th>
-                                    Thao tác
-                                </th>
+                                @if (Auth::user()->quyen_han === 'CBQL2' || Auth::user()->quyen_han === 'Admin')
+                                    <th>
+                                        Thao tác
+                                    </th>
+                                @endif
                             </thead>
                             <tbody class="clickable-row">
                                 @foreach ($data as $index => $canBo)
@@ -72,7 +76,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $canBo->ma_can_bo }}</td>
                                         <td>{{ $canBo->ten_can_bo }}</td>
-                                        <td>{{ $canBo->boPhan->ten_bo_phan }}</td>
+                                        <td>{{ $canBo->boPhan->ten_bo_phan ?? '' }}</td>
                                         <td>{{ $canBo->ten_dang_nhap }}</td>
                                         <td>{{ $canBo->quyen_han }}</td>
                                         <td>
@@ -83,13 +87,15 @@
                                             @endif
 
                                         </td>
-                                        <td>
-                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#xoaModal"
-                                                data-ma-can-bo="{{ $canBo->ma_can_bo }}"
-                                                data-ten-can-bo="{{ $canBo->ten_can_bo }}">
-                                                Xóa
-                                            </button>
-                                        </td>
+                                        @if (Auth::user()->quyen_han === 'CBQL2' || Auth::user()->quyen_han === 'Admin')
+                                            <td>
+                                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#xoaModal" data-ma-can-bo="{{ $canBo->ma_can_bo }}"
+                                                    data-ten-can-bo="{{ $canBo->ten_can_bo }}">
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -107,7 +113,7 @@
                     <h5 class="modal-title" id="thongTinModalLabel">Thông tin cán bộ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.update-can-bo') }}" method="POST">
+                <form action="{{ route('can-bo.update-can-bo') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -134,8 +140,7 @@
                                         </label>
                                         <input type="text" class="form-control" id="modalNhomViTriLamViec"
                                             name="nhom_vi_tri_lam_viec" max="255" placeholder="Nhập vị trí làm việc"
-                                            value="{{ $canBo->nhom_vi_tri_lam_viec }}"
-                                            required>
+                                            value="{{ $canBo->nhom_vi_tri_lam_viec ?? '' }}" required>
                                     </div>
                                     <div class="col-6">
                                         <label class="mt-1" for="bo_phan"><strong>Bộ phận</strong></label>
@@ -144,6 +149,10 @@
                                             @foreach ($boPhans as $boPhan)
                                                 @if ($boPhan->ma_bo_phan == $canBo->ma_bo_phan)
                                                     <option value="{{ $boPhan->ma_bo_phan }}" selected>
+                                                        {{ $boPhan->ten_bo_phan }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $boPhan->ma_bo_phan }}">
                                                         {{ $boPhan->ten_bo_phan }}
                                                     </option>
                                                 @endif
@@ -196,7 +205,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Thêm cán bộ mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.them-can-bo') }}" method="POST">
+                <form action="{{ route('can-bo.them-can-bo') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -277,7 +286,7 @@
                     <h4 class="modal-title">Xác nhận xóa cán bộ</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.xoa-can-bo') }}" method="POST">
+                <form action="{{ route('can-bo.xoa-can-bo') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">

@@ -11,7 +11,6 @@ class CanBo extends Model
     protected $primaryKey = 'ma_can_bo';
     public $incrementing = false;
     protected $keyType = 'string';
-    public $timestamps = false;
     protected $fillable = [
         'ma_can_bo',
         'ma_bo_phan',

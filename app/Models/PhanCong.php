@@ -9,6 +9,7 @@ class PhanCong extends Model
     protected $connection = 'mysql';
     protected $table = 'phan_cong';
     protected $primaryKey = 'ma_phan_cong';
+
     protected $fillable = [
         'ma_phan_cong',
         'ma_cong_viec',

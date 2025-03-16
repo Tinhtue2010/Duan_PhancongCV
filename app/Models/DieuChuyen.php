@@ -9,6 +9,7 @@ class DieuChuyen extends Model
     protected $connection = 'mysql';
     protected $table = 'dieu_chuyen';
     protected $primaryKey = 'ma_dieu_chuyen';
+
     protected $fillable = [
         'ma_dieu_chuyen',
         'ma_can_bo',

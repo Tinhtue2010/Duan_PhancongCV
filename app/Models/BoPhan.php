@@ -12,7 +12,6 @@ class BoPhan extends Model
     public $incrementing = false; 
     protected $keyType = 'string';
 
-    public $timestamps = false;
 
     protected $fillable = [
         'ma_bo_phan',

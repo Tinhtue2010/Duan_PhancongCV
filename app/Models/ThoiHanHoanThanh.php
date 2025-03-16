@@ -9,6 +9,7 @@ class ThoiHanHoanThanh extends Model
     protected $connection = 'mysql';
     protected $table = 'thoi_han_hoan_thanh';
     protected $primaryKey = 'ma_thoi_han';
+
     protected $fillable = [
         'ma_thoi_han',
         'ma_cong_viec',
