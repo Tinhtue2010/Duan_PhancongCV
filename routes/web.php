@@ -3,6 +3,7 @@
 use App\Http\Controllers\TaiKhoanController;
 use App\Http\Controllers\CanBoController;
 use App\Http\Controllers\BaoCaoController;
+use App\Http\Controllers\DemoController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home-page');
@@ -26,6 +27,8 @@ Route::middleware([\App\Http\Middleware\CheckRoleAdmin::class])->group(function 
         Route::post('/xoa-can-bo', [CanBoController::class, 'xoaCanBo'])->name('xoa-can-bo');
     });
 });
+
+Route::get('demo',[DemoController::class,'index']);
 
 Route::name('tai-khoan.')->group(function () {
     Route::get('/thay-doi-mat-khau', [TaiKhoanController::class, 'thayDoiMatKhau'])->name('thay-doi-mat-khau');
