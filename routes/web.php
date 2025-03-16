@@ -23,7 +23,6 @@ Route::middleware([\App\Http\Middleware\CheckRoleAdmin::class])->group(function 
         Route::post('/them-tai-khoan', [TaiKhoanController::class, 'themTaiKhoan'])->name('them-tai-khoan');
         Route::post('/update-tai-khoan', [TaiKhoanController::class, 'updateTaiKhoan'])->name('update-tai-khoan');
         Route::post('/xoa-tai-khoan', [TaiKhoanController::class, 'xoaTaiKhoan'])->name('xoa-tai-khoan');
-<<<<<<< HEAD
 
         Route::get('/quan-ly-can-bo', [CanBoController::class, 'danhSachCanBo'])->name('danh-sach-can-bo');
         Route::post('/them-can-bo', [CanBoController::class, 'themCanBo'])->name('them-can-bo');
@@ -32,8 +31,9 @@ Route::middleware([\App\Http\Middleware\CheckRoleAdmin::class])->group(function 
 
 
         Route::get('/quan-ly-nghi-phep', [NghiPhepController::class, 'index'])->name('quan-ly-nghi-phep');
-=======
->>>>>>> cf47dc014fca78f4154a2ce0b783a2e9b9e29191
+        Route::post('/them-nghi-phep', [NghiPhepController::class, 'create'])->name('them-nghi-phep');
+        Route::post('/update-nghi-phep', [NghiPhepController::class, 'update'])->name('update-nghi-phep');
+        Route::post('/xoa-nghi-phep', [NghiPhepController::class, 'delete'])->name('xoa-nghi-phep');
     });
 });
 

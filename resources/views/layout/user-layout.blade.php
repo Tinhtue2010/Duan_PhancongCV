@@ -172,6 +172,11 @@
                                         src="{{ asset('images/icons/officer.png') }}"></div>
                                 Danh sách cán bộ
                             </a>
+                            <a class="nav-link" href="/quan-ly-nghi-phep">
+                                <div class="sb-nav-link-icon"><img class="side-bar-icon"
+                                        src="{{ asset('images/icons/officer.png') }}"></div>
+                                Quản lý nghỉ phép
+                            </a>
                         @endif
                         <div class="sb-sidenav-menu-heading">Tài khoản</div>
                         <a class="nav-link" href="/thay-doi-mat-khau">

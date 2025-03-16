@@ -47,9 +47,6 @@
                                     Tên cán bộ
                                 </th>
                                 <th>
-                                    Bộ phận
-                                </th>
-                                <th>
                                     Ngày làm việc
                                 </th>
                                 <th>
@@ -73,25 +70,34 @@
                             </thead>
                             <tbody class="clickable-row">
                                 @foreach ($data as $index => $item)
-                                    <tr>
+                                    <tr data-ma-can-bo="{{ $item->ma_can_bo }}"
+                                        data-ngay-lam-viec="{{ $item->ngay_lam_viec ?? '' }}"
+                                        data-tu-gio="{{ $item->tu_gio ?? '' }}" data-den-gio="{{ $item->den_gio ?? '' }}"
+                                        data-ngay-bat-dau="{{ $item->ngay_bat_dau }}"
+                                        data-ngay-ket-thuc="{{ $item->ngay_ket_thuc }}"
+                                        data-ly-do-vang="{{ $item->ly_do_vang ?? '' }}"
+                                        data-ma-nghi-phep="{{ $item->ma_nghi_phep }}" >
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $item->ma_can_bo }}</td>
-                                        <td>{{ $item->ten_can_bo }}</td>
-                                        <td>{{ $item->boPhan->ten_bo_phan }}</td>
-                                        <td>{{ $item->ten_dang_nhap }}</td>
-                                        <td>{{ $item->quyen_han }}</td>
+                                        <td>{{ $item->canBo->ten_can_bo ?? 'N/A' }}</td>
+                                        <!-- Giả sử có quan hệ với bảng cán bộ -->
+                                        <td>{{ $item->ngay_lam_viec ?? 'N/A' }}</td>
+                                        <td>{{ $item->tu_gio ?? 'N/A' }}</td>
+                                        <td>{{ $item->den_gio ?? 'N/A' }}</td>
+                                        <td>{{ $item->ngay_bat_dau }}</td>
+                                        <td>{{ $item->ngay_ket_thuc }}</td>
+                                        <td>{{ $item->ly_do_vang ?? 'Không có' }}</td>
                                         <td>
-
-
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#xoaModal">
+                                            <button class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#xoaModal" data-ma-can-bo="{{ $item->ma_can_bo }}" data-ma-nghi-phep="{{ $item->ma_nghi_phep }}" 
+                                                data-ten-can-bo="{{ $item->ten_can_bo }}">
                                                 Xóa
                                             </button>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
+
                         </table>
                     </div>
                 </div>
@@ -106,72 +112,14 @@
                     <h5 class="modal-title" id="thongTinModalLabel">Thông tin cán bộ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.update-can-bo') }}" method="POST">
+                <form action="{{ route('quan-ly-khac.update-nghi-phep') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
-                                <p class="mt-2"><strong>Mã cán bộ:</strong> <span id="modalMaCongChuc"></span></p>
-                                <input type="hidden" class="form-control" id="modalMaCongChucInput" name="ma_can_bo">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-1" for="ten_can_bo"><strong>Tên cán bộ</strong></label>
-                                        <input type="text" class="form-control" id="modalTenCongChuc" name="ten_can_bo"
-                                            max="255" placeholder="Nhập tên cán bộ" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="chuc_danh"><strong>Chức danh</strong></label>
-                                        <input type="text" class="form-control" id="modalChucDanh" name="chuc_danh"
-                                            max="255" placeholder="Nhập chức danh" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-1" for="nhom_vi_tri_lam_viec">
-                                            <strong>Nhóm vị trí làm việc</strong>
-                                        </label>
-                                        <input type="text" class="form-control" id="modalNhomViTriLamViec"
-                                            name="nhom_vi_tri_lam_viec" max="255" placeholder="Nhập vị trí làm việc"
-                                            value=""
-                                            required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="bo_phan"><strong>Bộ phận</strong></label>
-                                        <select class="form-control" id="bo-phan-dropdown-search" name="ma_bo_phan">
-                                            <option value=''></option>
-                                            @foreach ($boPhans as $boPhan)
-
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
-                                <select class="form-control" id="trang-thai-dropdown-search" name="trang_thai">
-                                    <option value=''></option>
-                                    <option value='1' selected>Đang công tác</option>
-                                    <option value='0'>Nghỉ công tác</option>
-                                </select>
-
-                                <hr />
-                                <p class="mt-2"><strong>Tên đăng nhập:</strong> <span id="modalTenDangNhap"></span></p>
-                                <h5>Chọn tài khoản khác cho cán bộ này</h5>
-                                <p><strong>Tên đăng nhập: </strong></p>
-                                <select class="form-control" id="tai-khoan-dropdown-search" name="ma_tai_khoan">
-                                    <option value=''></option>
-                                    @foreach ($taiKhoans as $taiKhoan)
-                                        <option value="{{ $taiKhoan->ma_tai_khoan }}">
-                                            {{ $taiKhoan->ten_dang_nhap }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <label class="mt-1" for="trang_thai"><strong>Quyền tài khoản</strong></label>
-                                <select class="form-control" id="quyen-han-dropdown-search" name="quyen_han">
-                                    <option value='Cán bộ'>Cán bộ</option>
-                                    <option value='CBQL1' selected>Cán bộ quản lý 1</option>
-                                    <option value='CBQL2'>Cán bộ quản lý 2</option>
-                                </select>
+                                @include('quan-ly-khac.nghi-phep.field')
+                                <input type="hidden" name="ma_nghi_phep" id="modalInputMaCongChucXoa">
                             </div>
                         </div>
                     </div>
@@ -191,66 +139,13 @@
                     <h5 class="modal-title" id="exampleModalLabel">Thêm cán bộ mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.them-can-bo') }}" method="POST">
+                <form action="{{ route('quan-ly-khac.them-nghi-phep') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-1" for="ten_can_bo"><strong>Tên cán bộ</strong></label>
-                                        <input type="text" class="form-control" id="modalTenCongChuc"
-                                            name="ten_can_bo" max="255" placeholder="Nhập tên cán bộ" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="chuc_danh"><strong>Chức danh</strong></label>
-                                        <input type="text" class="form-control" id="modalChucDanh" name="chuc_danh"
-                                            max="255" placeholder="Nhập chức danh" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-1" for="nhom_vi_tri_lam_viec">
-                                            <strong>Nhóm vị trí làm việc</strong>
-                                        </label>
-                                        <input type="text" class="form-control" id="modalNhomViTriLamViec"
-                                            name="nhom_vi_tri_lam_viec" max="255" placeholder="Nhập vị trí làm việc"
-                                            required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="bo_phan"><strong>Bộ phận</strong></label>
-                                        <select class="form-control" id="bo-phan-dropdown-search" name="ma_bo_phan">
-                                            <option value=''></option>
-                                            @foreach ($boPhans as $boPhan)
-                                                <option value="{{ $boPhan->ma_bo_phan }}">
-                                                    {{ $boPhan->ten_bo_phan }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
-                                <select class="form-control" id="trang-thai-dropdown-search" name="trang_thai">
-                                    <option value=''></option>
-                                    <option value='1' selected>Đang công tác</option>
-                                    <option value='0'>Nghỉ công tác</option>
-                                </select>
-
-                                <hr />
-                                <label class="mt-1" for="ten_dang_nhap"><strong>Tên đăng nhập</strong></label>
-                                <input type="text" class="form-control" id="ten_dang_nhap" name="ten_dang_nhap"
-                                    placeholder="Nhập tên đăng nhập"autocomplete="new-password" required>
-                                <label class="mt-1" for="mat_khau"><strong>Mật khẩu</strong></label>
-                                <input type="password" class="form-control" id="mat_khau" name="mat_khau"
-                                    placeholder="Nhập mật khẩu" autocomplete="new-password" required>
-                                <label class="mt-1" for="trang_thai"><strong>Quyền tài khoản</strong></label>
-                                <select class="form-control" id="quyen-han-dropdown-search" name="quyen_han">
-                                    <option value='Cán bộ' selected>Cán bộ</option>
-                                    <option value='CBQL1'>Cán bộ quản lý 1</option>
-                                    <option value='CBQL2'>Cán bộ quản lý 2</option>
-                                </select>
+                                @include('quan-ly-khac.nghi-phep.field')
                             </div>
                         </div>
                     </div>
@@ -272,7 +167,7 @@
                     <h4 class="modal-title">Xác nhận xóa cán bộ</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.xoa-can-bo') }}" method="POST">
+                <form action="{{ route('quan-ly-khac.xoa-nghi-phep') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -285,7 +180,7 @@
                             <label><strong>Tên cán bộ:</strong></label>
                             <p class="d-inline" id="modalTenCongChucXoa"></p>
                         </div>
-                        <input type="hidden" name="ma_can_bo" id="modalInputMaCongChucXoa">
+                        <input type="hidden" name="ma_nghi_phep" id="modalInputMaCongChucXoa">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
@@ -322,56 +217,27 @@
                     return;
                 }
 
-                var maCongChuc = $(this).data('ma-can-bo');
-                var tenCongChuc = $(this).data('ten-can-bo');
-                var tenDangNhap = $(this).data('ten-dang-nhap');
-                var maTaiKhoan = $(this).data('ma-tai-khoan');
-                var chucDanh = $(this).data('chuc-danh');
-                var trangThai = $(this).data('trang-thai');
-                var phanQuyen = $(this).data('quyen-han');
-                var nhomViTriLamViec = $(this).data('nhom-vi-tri-lam-viec');
+                var maCanBo = $(this).data('ma-can-bo');
+                var ngayLamViec = $(this).data('ngay-lam-viec');
+                var tuGio = $(this).data('tu-gio');
+                var denGio = $(this).data('den-gio');
+                var ngayBatDau = $(this).data('ngay-bat-dau');
+                var ngayKetThuc = $(this).data('ngay-ket-thuc');
+                var lyDoVang = $(this).data('ly-do-vang');
+                var maNghiPhep = this.getAttribute('data-ma-nghi-phep');
 
-                document.getElementById('modalMaCongChuc').value = maCongChuc;
-                document.getElementById('modalTenCongChuc').value = tenCongChuc;
-                document.getElementById('modalChucDanh').value = chucDanh;
-
-                $('#modalTenDangNhap').text(tenDangNhap);
-                document.getElementById('modalMaCongChuc').value = maCongChuc;
-                const modalMaCongChuc = document.getElementById('modalMaCongChuc');
-                modalMaCongChuc.textContent = maCongChuc;
-
-                const selectTrangThai = document.getElementById('trang-thai-dropdown-search');
-                if (trangThai == 0) {
-                    selectTrangThai.value = "0";
-                } else {
-                    selectTrangThai.value = "1";
-                }
-
-
-
-
-                const selectTaiKhoan = document.getElementById('tai-khoan-dropdown-search');
-                const newOption = document.createElement('option');
-                newOption.value = maTaiKhoan;
-                newOption.text = tenDangNhap;
-                selectTaiKhoan.add(newOption);
-                newOption.selected = true;
-
-                const selectQuyenHan = document.getElementById('quyen-han-dropdown-search');
-                if (phanQuyen == "CBQL1") {
-                    selectQuyenHan.value = "CBQL1";
-                } else if (phanQuyen == "CBQL2") {
-                    selectQuyenHan.value = "CBQL2";
-                } else {
-                    selectQuyenHan.value = "Cán bộ";
-                }
-
-                const modalInputMaCongChuc = document.getElementById('modalMaCongChucInput');
-                modalInputMaCongChuc.value = maCongChuc;
-
+                $('#thongTinModal [name="ma_can_bo"]').val(maCanBo);
+                $('#thongTinModal [name="ngay_lam_viec"]').val(ngayLamViec);
+                $('#thongTinModal [name="tu_gio"]').val(tuGio);
+                $('#thongTinModal [name="den_gio"]').val(denGio);
+                $('#thongTinModal [name="ngay_bat_dau"]').val(ngayBatDau);
+                $('#thongTinModal [name="ngay_ket_thuc"]').val(ngayKetThuc);
+                $('#thongTinModal [name="ly_do_vang"]').val(lyDoVang);
+                $('#thongTinModal [name="ma_nghi_phep"]').val(maNghiPhep);
 
                 $('#thongTinModal').modal('show');
             });
+
         });
     </script>
 
@@ -392,11 +258,13 @@
                     // Get data from the clicked button
                     const maCongChuc = this.getAttribute('data-ma-can-bo');
                     const tenCongChuc = this.getAttribute('data-ten-can-bo');
+                    const maNghiPhep = this.getAttribute('data-ma-nghi-phep');
+                    
 
                     // Set data in the modal
                     modalTenCongChuc.textContent = tenCongChuc;
                     modalMaCongChuc.textContent = maCongChuc;
-                    modalInputMaCongChuc.value = maCongChuc;
+                    modalInputMaCongChuc.value = maNghiPhep;
                 });
             });
         });
