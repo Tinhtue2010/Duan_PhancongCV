@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Mar 16, 2025 at 01:32 AM
+-- Generation Time: Mar 16, 2025 at 07:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,13 @@ CREATE TABLE `bo_phan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- Dumping data for table `bo_phan`
+--
+
+INSERT INTO `bo_phan` (`ma_bo_phan`, `ten_bo_phan`, `chuc_nang_nhiem_vu`, `thoi_gian_thanh_lap`, `thoi_gian_giai_the`, `trang_thai`) VALUES
+('BP01', '123', '345', '2025-03-11', '2025-03-14', '1');
+
+--
 -- Triggers `bo_phan`
 --
 DELIMITER $$
@@ -66,21 +73,18 @@ CREATE TABLE `can_bo` (
   `ma_can_bo` varchar(10) NOT NULL,
   `ma_bo_phan` varchar(50) NOT NULL,
   `ten_can_bo` varchar(255) NOT NULL,
-  `ngay_sinh` date NOT NULL,
-  `trinh_do` varchar(50) DEFAULT NULL,
-  `chuyen_mon` varchar(50) DEFAULT NULL,
   `chuc_danh` varchar(50) DEFAULT NULL,
-  `ngay_tuyen_dung` date NOT NULL,
   `trang_thai` tinyint(4) NOT NULL,
-  `ma_tai_khoan` int(11) NOT NULL
+  `ma_tai_khoan` int(11) NOT NULL,
+  `nhom_vi_tri_lam_viec` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `can_bo`
 --
 
-INSERT INTO `can_bo` (`ma_can_bo`, `ma_bo_phan`, `ten_can_bo`, `ngay_sinh`, `trinh_do`, `chuyen_mon`, `chuc_danh`, `ngay_tuyen_dung`, `trang_thai`, `ma_tai_khoan`) VALUES
-('HQ001', '', 'Trần Đạt a', '2024-10-10', '6', '7', '5', '2025-03-14', 1, 2);
+INSERT INTO `can_bo` (`ma_can_bo`, `ma_bo_phan`, `ten_can_bo`, `chuc_danh`, `trang_thai`, `ma_tai_khoan`, `nhom_vi_tri_lam_viec`) VALUES
+('HQ001', 'BP01', 'Trần Đạt a', '5', 1, 2, '');
 
 --
 -- Triggers `can_bo`
@@ -113,7 +117,7 @@ CREATE TABLE `cong_viec` (
   `ten_cong_viec` varchar(255) NOT NULL,
   `ma_bo_phan` varchar(50) NOT NULL,
   `loai_cong_viec` varchar(50) NOT NULL,
-  `thoi_han_hoan_thanh` varchar(255) NOT NULL,
+  `ma_thoi_han` int(11) NOT NULL,
   `trang_thai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -126,7 +130,7 @@ CREATE TABLE `cong_viec` (
 CREATE TABLE `dieu_chuyen` (
   `ma_dieu_chuyen` int(11) NOT NULL,
   `ma_can_bo` varchar(50) NOT NULL,
-  `thoi_gian` date NOT NULL,
+  `thoi_gian_dieu_chuyen` date NOT NULL,
   `ma_bo_phan_chuyen_den` varchar(50) NOT NULL,
   `chuc_danh_moi` varchar(50) NOT NULL,
   `ly_do` varchar(255) NOT NULL
@@ -175,16 +179,17 @@ CREATE TABLE `tai_khoan` (
   `ma_tai_khoan` int(11) NOT NULL,
   `ten_dang_nhap` varchar(50) NOT NULL,
   `mat_khau` varchar(255) NOT NULL,
-  `loai_tai_khoan` varchar(50) NOT NULL
+  `quyen_han` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tai_khoan`
 --
 
-INSERT INTO `tai_khoan` (`ma_tai_khoan`, `ten_dang_nhap`, `mat_khau`, `loai_tai_khoan`) VALUES
+INSERT INTO `tai_khoan` (`ma_tai_khoan`, `ten_dang_nhap`, `mat_khau`, `quyen_han`) VALUES
 (1, 'admin', '$2y$12$EUy8w7SYfGF0gTaKFgzcLuHkZr1LkTPE4TdLmO8Vw.gPvctXcNfea', 'Admin'),
-(2, 'dat123', '$2y$12$xs2aQX/m3W2OdiSQzfVXoefnhrCaiAVIQr8TNES.tq2sMYSIqptui', 'Cán bộ');
+(2, 'dat123', '$2y$12$ccQ33n5.BqoYc3MqJg.wBe9Rf3yWjvmI01RcDDNpKw2l920m7O9d6', 'Cán bộ'),
+(3, '0102345275', '$2y$12$CgdJPbjlRwrM8ff/y81L2.Ec5qdKziR9BcpwuCMUvp2UwWldFG2ey', 'Cán bộ');
 
 -- --------------------------------------------------------
 
@@ -273,7 +278,7 @@ ALTER TABLE `phan_cong`
 -- AUTO_INCREMENT for table `tai_khoan`
 --
 ALTER TABLE `tai_khoan`
-  MODIFY `ma_tai_khoan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ma_tai_khoan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `thoi_han_hoan_thanh`
