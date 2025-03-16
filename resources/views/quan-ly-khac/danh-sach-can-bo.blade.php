@@ -72,7 +72,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $canBo->ma_can_bo }}</td>
                                         <td>{{ $canBo->ten_can_bo }}</td>
-                                        <td>{{ $canBo->boPhan->ten_bo_phan }}</td>
+                                        <td>{{ $canBo->boPhan->ten_bo_phan ?? '' }}</td>
                                         <td>{{ $canBo->ten_dang_nhap }}</td>
                                         <td>{{ $canBo->quyen_han }}</td>
                                         <td>
@@ -134,7 +134,7 @@
                                         </label>
                                         <input type="text" class="form-control" id="modalNhomViTriLamViec"
                                             name="nhom_vi_tri_lam_viec" max="255" placeholder="Nhập vị trí làm việc"
-                                            value="{{ $canBo->nhom_vi_tri_lam_viec }}" required>
+                                            value="{{ $canBo->nhom_vi_tri_lam_viec ?? '' }}" required>
                                     </div>
                                     <div class="col-6">
                                         <label class="mt-1" for="bo_phan"><strong>Bộ phận</strong></label>

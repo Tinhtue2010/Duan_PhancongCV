@@ -52,18 +52,20 @@
                                 </th>
                             </thead>
                             <tbody class="clickable-row">
-                                @foreach ($data as $index => $boPhan)
-                                    <tr data-ma-dieu-chuyen="{{ $boPhan->ma_bo_phan }}"
-                                        data-ma-can-bo="{{ $boPhan->ma_can_bo }}"
-                                        data-chuc-nang-nhiem-vu="{{ $boPhan->chuc_nang_nhiem_vu }}"
-                                        data-thoi-gian-thanh-lap="{{ $boPhan->thoi_gian_thanh_lap }}"
-                                        data-ten-bo-phan-chuyen-den="{{ $boPhan->thoi_gian_giai_the }}"
-                                        data-ly-do="{{ $boPhan->trang_thai }}"
+                                @foreach ($data as $index => $dieuChuyen)
+                                    <tr data-ma-dieu-chuyen="{{ $dieuChuyen->ma_dieu_chuyen }}"
+                                        data-ma-can-bo="{{ $dieuChuyen->ma_can_bo }}"
+                                        data-thoi-gian-dieu-chuyen="{{ $dieuChuyen->thoi_gian_dieu_chuyen }}"
+                                        data-ten-bo-phan-chuyen-den="{{ $dieuChuyen->ten_bo_phan }}"
+                                        data-chuc-danh-moi="{{ $dieuChuyen->chuc_danh_moi }}"
+                                        data-ly-do="{{ $dieuChuyen->ly_do }}"
                                         >
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $boPhan->ma_bo_phan }}</td>
-                                        <td>{{ $boPhan->ten_bo_phan }}</td>
-                                        <td>{{ $boPhan->chuc_nang_nhiem_vu }}</td>
+                                        <td>{{ $dieuChuyen->ma_bo_phan }}</td>
+                                        <td>{{ $dieuChuyen->ten_can_bo }}</td>
+                                        <td>{{ $dieuChuyen->thoi_gian_dieu_chuyen }}</td>
+                                        <td>{{ $dieuChuyen->ten_bo_phan }}</td>
+                                        <td>{{ $dieuChuyen->ly_do }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -89,29 +91,6 @@
                             <div class="col-12">
                                 <p class="mt-2"><strong>Mã điều chuyển:</strong> <span id="modalMaDieuChuyen"></span></p>
                                 <input type="hidden" class="form-control" id="modalMaDieuChuyenInput" name="ma_bo_phan">
-
-                                <label class="mt-1" for="ten_bo_phan"><strong>Cán bộ</strong></label>
-                                <input type="text" class="form-control" id="modalTenBoPhan" name="ten_bo_phan"
-                                    max="255" placeholder="Nhập tên điều chuyển" required>
-
-                                <label class="mt-1" for="chuc_nang_nhiem_vu"><strong>Chức năng nhiệm vụ</strong></label>
-                                <input type="text" class="form-control" id="modalChucNangNhiemVu"
-                                    name="chuc_nang_nhiem_vu" max="255" placeholder="Nhập chức năng nhiệm vụ" required>
-
-                                <label class="mt-1" for="thoi_gian_thanh_lap"><strong>Thời gian thành lập</strong></label>
-                                <input type="text" id="modalThanhLap" class="form-control" placeholder="dd/mm/yyyy"
-                                    name="thoi_gian_thanh_lap" autocomplete="off">
-
-                                <label class="mt-1" for="thoi_gian_giai_the"><strong>Thời gian giải thể</strong></label>
-                                <input type="text" id="modalGiaiThe" class="form-control" placeholder="dd/mm/yyyy"
-                                    name="thoi_gian_giai_the" autocomplete="off">
-
-                                <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
-                                <select class="form-control" id="trang-thai-dropdown-search" name="trang_thai">
-                                    <option value=''></option>
-                                    <option value='1'>Đang hoạt động</option>
-                                    <option value='0'>Ngừng hoạt động</option>
-                                </select>
 
                             </div>
                         </div>
@@ -201,10 +180,6 @@
                         <div>
                             <label><strong>Mã điều chuyển:</strong></label>
                             <p class="d-inline" id="modalMaDieuChuyenXoa"></p>
-                        </div>
-                        <div>
-                            <label><strong>Tên điều chuyển:</strong></label>
-                            <p class="d-inline" id="modalTenBoPhanXoa"></p>
                         </div>
                         <input type="hidden" name="ma_bo_phan" id="modalInputMaDieuChuyenXoa">
                     </div>

@@ -15,16 +15,19 @@ class DieuChuyenController extends Controller
 {
     public function danhSachDieuChuyen()
     {
-        $data = DieuChuyen::orderBy('ma_dieu_chuyen', 'desc')->get();
+        $data = DieuChuyen::join('can_bo', 'can_bo.ma_can_bo', '=', 'dieu_chuyen.ma_can_bo')
+            ->join('bo_phan', 'bo_phan.ma_bo_phan', '=', 'dieu_chuyen.ma_bo_phan_chuyen_den')
+            ->orderBy('ma_dieu_chuyen', 'desc')
+            ->get();
         $canBos = CanBo::where('trang_thai', 1)->get();
         $boPhans = BoPhan::where('trang_thai', 1)->get();
-        return view('quan-ly-khac.danh-sach-dieu-chuyen', data: compact( 'data','canBos','boPhans'));
+        return view('quan-ly-khac.danh-sach-dieu-chuyen', data: compact('data', 'canBos', 'boPhans'));
     }
 
     public function themDieuChuyen(Request $request)
     {
         $canBo = CanBo::find($request->ma_can_bo);
-        if($request->ly_do == "Điều chuyển bộ phận"){
+        if ($request->ly_do == "Điều chuyển bộ phận") {
             $canBo->update([
                 'ma_bo_phan' => $request->ma_bo_phan_chuyen_den,
                 'chuc_danh' => $request->chuc_danh_moi
@@ -37,11 +40,11 @@ class DieuChuyenController extends Controller
 
         DieuChuyen::create([
             'ma_dieu_chuyen' => $request->ma_dieu_chuyen,
-            'ma_can_bo'=> $request->ma_can_bo,
-            'thoi_gian_dieu_chuyen'=> $request->thoi_gian_dieu_chuyen,
-            'ma_bo_phan_chuyen_den'=> $request->ma_bo_phan_chuyen_den,
-            'chuc_danh_moi'=> $request->chuc_danh_moi,
-            'ly_do'=> $request->ly_do,
+            'ma_can_bo' => $request->ma_can_bo,
+            'thoi_gian_dieu_chuyen' => $request->thoi_gian_dieu_chuyen,
+            'ma_bo_phan_chuyen_den' => $request->ma_bo_phan_chuyen_den,
+            'chuc_danh_moi' => $request->chuc_danh_moi,
+            'ly_do' => $request->ly_do,
         ]);
 
 
@@ -61,11 +64,11 @@ class DieuChuyenController extends Controller
         if ($dieuChuyen) {
             $dieuChuyen->update([
                 'ma_dieu_chuyen' => $request->ma_dieu_chuyen,
-                'ma_can_bo'=> $request->ma_can_bo,
-                'thoi_gian_dieu_chuyen'=> $request->thoi_gian_dieu_chuyen,
-                'ma_bo_phan_chuyen_den'=> $request->ma_bo_phan_chuyen_den,
-                'chuc_danh_moi'=> $request->chuc_danh_moi,
-                'ly_do'=> $request->ly_do,
+                'ma_can_bo' => $request->ma_can_bo,
+                'thoi_gian_dieu_chuyen' => $request->thoi_gian_dieu_chuyen,
+                'ma_bo_phan_chuyen_den' => $request->ma_bo_phan_chuyen_den,
+                'chuc_danh_moi' => $request->chuc_danh_moi,
+                'ly_do' => $request->ly_do,
             ]);
 
             $dieuChuyen->save();
