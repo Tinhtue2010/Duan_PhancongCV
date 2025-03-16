@@ -22,3 +22,4 @@ class ThoiHanHoanThanh extends Model
         return $this->belongsTo(CongViec::class, 'ma_cong_viec', 'ma_cong_viec');
     }
 }
+

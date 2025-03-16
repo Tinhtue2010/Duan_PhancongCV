@@ -186,9 +186,9 @@ class BaoCaoTonDoanhNghiepExport implements FromArray, WithEvents
                 ]);
 
                 // Left align for specific cells
-                $sheet->getStyle('A7')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-                $sheet->getStyle('A8')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-                $sheet->getStyle('G9')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+                // $sheet->getStyle('A7')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+                // $sheet->getStyle('A8')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+                // $sheet->getStyle('G9')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
             },
         ];
     }
