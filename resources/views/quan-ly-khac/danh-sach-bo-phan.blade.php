@@ -28,8 +28,10 @@
                             <h4 class="font-weight-bold text-primary">Danh sách bộ phận</h4>
                         </div>
                         <div class="col-3">
-                            <button data-bs-toggle="modal" data-bs-target="#themModal"
-                                class="btn btn-success float-end">Thêm bộ phận mới</button>
+                            @if (Auth::user()->quyen_han === 'CBQL2')
+                                <button data-bs-toggle="modal" data-bs-target="#themModal"
+                                    class="btn btn-success float-end">Thêm bộ phận mới</button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -47,11 +49,16 @@
                                     Tên bộ phận
                                 </th>
                                 <th>
-                                    Trạng thái
+                                    Chức năng nhiệm vụ
                                 </th>
                                 <th>
-                                    Thao tác
+                                    Trạng thái
                                 </th>
+                                @if (Auth::user()->quyen_han === 'CBQL2')
+                                    <th>
+                                        Thao tác
+                                    </th>
+                                @endif
                             </thead>
                             <tbody class="clickable-row">
                                 @foreach ($data as $index => $boPhan)
@@ -64,6 +71,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $boPhan->ma_bo_phan }}</td>
                                         <td>{{ $boPhan->ten_bo_phan }}</td>
+                                        <td>{{ $boPhan->chuc_nang_nhiem_vu }}</td>
                                         <td>
                                             @if ($boPhan->trang_thai == 1)
                                                 Đang hoạt động
@@ -72,13 +80,15 @@
                                             @endif
 
                                         </td>
-                                        <td>
-                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#xoaModal"
-                                                data-ma-bo-phan="{{ $boPhan->ma_bo_phan }}"
-                                                data-ten-bo-phan="{{ $boPhan->ten_bo_phan }}">
-                                                Xóa
-                                            </button>
-                                        </td>
+                                        @if (Auth::user()->quyen_han === 'CBQL2')
+                                            <td>
+                                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#xoaModal" data-ma-bo-phan="{{ $boPhan->ma_bo_phan }}"
+                                                    data-ten-bo-phan="{{ $boPhan->ten_bo_phan }}">
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -96,7 +106,7 @@
                     <h5 class="modal-title" id="thongTinModalLabel">Thông tin bộ phận</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.update-bo-phan') }}" method="POST">
+                <form action="{{ route('bo-phan.update-bo-phan') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -132,8 +142,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Cập nhật</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        @if (Auth::user()->quyen_han === 'CBQL2')
+                            <button type="submit" class="btn btn-success">Cập nhật</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -147,7 +159,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Thêm bộ phận mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.them-bo-phan') }}" method="POST">
+                <form action="{{ route('bo-phan.them-bo-phan') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -163,14 +175,10 @@
                         <input type="text" id="thoi_gian_thanh_lap" class="form-control" placeholder="dd/mm/yyyy"
                             name="thoi_gian_thanh_lap" autocomplete="off">
 
-                        <label class="mt-1" for="thoi_gian_giai_the"><strong>Thời gian giải thể</strong></label>
-                        <input type="text" id="thoi_gian_giai_the" class="form-control" placeholder="dd/mm/yyyy"
-                            name="thoi_gian_giai_the" autocomplete="off">
-
                         <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
                         <select class="form-control" id="trang-thai-dropdown-search-2" name="trang_thai">
                             <option value=''></option>
-                            <option value='1'>Đang hoạt động</option>
+                            <option value='1' selected>Đang hoạt động</option>
                             <option value='0'>Ngừng hoạt động</option>
                         </select>
                     </div>
@@ -192,7 +200,7 @@
                     <h4 class="modal-title">Xác nhận xóa bộ phận</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.xoa-bo-phan') }}" method="POST">
+                <form action="{{ route('bo-phan.xoa-bo-phan') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">

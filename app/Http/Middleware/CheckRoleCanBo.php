@@ -10,7 +10,7 @@ class CheckRoleCanBo
 {
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && $request->user()->quyen_han !== "Cán bộ") {
+        if (($request->user()) && ($request->user()->quyen_han !== "Cán bộ" && $request->user()->quyen_han !== "CBQL1" && $request->user()->quyen_han !== "CBQL2")) {
             return redirect('dang-nhap');
         }
 

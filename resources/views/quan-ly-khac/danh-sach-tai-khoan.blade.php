@@ -40,9 +40,6 @@
                                     Loại tài khoản
                                 </th>
                                 <th>
-                                    Ngày tạo
-                                </th>
-                                <th>
                                     Thao tác
                                 </th>
                             </thead>
@@ -54,7 +51,6 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $taiKhoan->ten_dang_nhap }}</td>
                                         <td>{{ $taiKhoan->quyen_han }}</td>
-                                        <td>{{ $taiKhoan->created_at }}</td>
                                         @if ($taiKhoan->quyen_han == 'Doanh nghiệp')
                                             <td></td>
                                         @else

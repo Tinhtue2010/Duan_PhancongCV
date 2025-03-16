@@ -20,7 +20,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-md-7">
                     <center class="my-4 pt-5">
-                        <h1><strong>Hệ thống sổ điện tử</strong></h1>
+                        <h1><strong>Hệ thống hỗ trợ phân công nhiệm vụ</strong></h1>
                     </center>
                     <h3 class="mt-5 pt-5"><strong>Đăng nhập vào hệ thống</strong></h3>
                     @if (session('alert-danger'))

@@ -27,12 +27,12 @@ class TaiKhoanController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-            if ($user->quyen_han == "Cán bộ") {
+            if ($user->quyen_han != "Admin") {
                 if (!CanBo::where('ma_tai_khoan', Auth::user()->ma_tai_khoan)->first()) {
                     session()->flash('alert-danger', 'Tài khoản này chưa được gán cho cán bộ nào');
                     return redirect()->back();
                 }
-                return redirect()->route('nhap-hang.quan-ly-nhap-hang');
+                return redirect()->route('bo-phan.danh-sach-bo-phan');
             } elseif ($user->quyen_han == "Admin") {
                 return redirect()->route('quan-ly-khac.danh-sach-can-bo');
             }

@@ -38,6 +38,6 @@ class TaiKhoan extends Authenticatable
 
     public function canBo()
     {
-        return $this->hasMany(CanBo::class, 'ma_tai_khoan', 'ma_tai_khoan');
+        return $this->hasOne(CanBo::class, 'ma_tai_khoan', 'ma_tai_khoan');
     }
 }

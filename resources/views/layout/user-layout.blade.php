@@ -75,7 +75,7 @@
             {{-- <a class="navbar-brand" href="/">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
             </a> --}}
-            <a class="navbar-brand" href="/">HỆ THỐNG THEO DÕI XUẤT - NHẬP - TỒN</a>
+            <a class="navbar-brand" href="/">HỆ THỐNG HỖ TRỢ PHÂN CÔNG NHIỆM VỤ</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -87,20 +87,26 @@
                         <a class="nav-link active" href="/">Trang chủ</a>
                     </li>
 
-                    <!-- Menu có dropdown Giới thiệu-->
-                    
-
                     <!-- Menu có dropdown Hoạt động-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="courseDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Hoạt động
                         </a>
+                        @if (Auth::user()->quyen_han == 'Admin')
                         <ul class="dropdown-menu" aria-labelledby="courseDropdown">
-                            <li><a class="dropdown-item" href="/quan-ly-nhap-hang">Quản lý nhập hàng</a></li>
-                            <li><a class="dropdown-item" href="/quan-ly-xuat-hang">Quản lý xuất hàng</a></li>
+                            <li><a class="dropdown-item" href="/quan-ly-tai-khoan">Quản lý tài khoản</a>
+                            <li><a class="dropdown-item" href="/quan-ly-can-bo">Quản lý cán bộ</a>
+                            </li>
                         </ul>
+                        @elseif(Auth::user()->quyen_han != 'Admin')
+                        <ul class="dropdown-menu" aria-labelledby="courseDropdown">
+                            <li><a class="dropdown-item" href="/quan-ly-bo-phan">Quản lý bộ phận</a>
+                            </li>
+                        </ul>
+                        @endif
                     </li>
+
                     @if (Auth::user())
                         <li class="nav-item">
                             <form action="{{ route('dang-xuat') }}" method="POST" style="display: none;"
@@ -113,14 +119,9 @@
                             </a>
                         </li>
                         <li class="nav-item text-primary text-center ms-2">
-                            @if (Auth::user()->quyen_han == 'Cán bộ')
-                                <span class="text-primary">{{ Auth::user()->CanBo->ten_can_bo }}</span>
+                            @if (Auth::user()->quyen_han !== 'Admin')
+                                <span class="text-primary">{{ Auth::user()->canBo->ten_can_bo ?? '' }}</span>
                                 (<span>{{ Auth::user()->CanBo->ma_can_bo }}</span>)
-                            @elseif (Auth::user()->quyen_han == 'Doanh nghiệp')
-                                <div id="doanh-nghiep-text">
-                                    {{ Auth::user()->doanhNghiep->ten_doanh_nghiep }} ({{ Auth::user()->doanhNghiep->chuHang->ten_chu_hang ?? '' }})
-                                    
-                                </div>
                             @endif
                         </li>
                     @else
@@ -143,12 +144,12 @@
             <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        @if (Auth::user()->quyen_han === 'Cán bộ')
-                            <div class="sb-sidenav-menu-heading">Quản lý nhập hàng</div>
-                            <a class="nav-link" href="/quan-ly-nhap-hang">
+                        @if (Auth::user()->quyen_han !== 'Admin')
+                            <div class="sb-sidenav-menu-heading">Quản lý</div>
+                            <a class="nav-link" href="/quan-ly-bo-phan">
                                 <div class="sb-nav-link-icon"><img class="side-bar-icon"
-                                        src="{{ asset('images/icons/import-goods.png') }}"></div>
-                                Quản lý tờ khai nhập
+                                        src="{{ asset('images/icons/officer.png') }}"></div>
+                                Danh sách bộ phận
                             </a>
                         @elseif (Auth::user()->quyen_han === 'Admin')
                             <div class="sb-sidenav-menu-heading">Quản lý thông tin</div>
@@ -161,11 +162,6 @@
                                 <div class="sb-nav-link-icon"><img class="side-bar-icon"
                                         src="{{ asset('images/icons/officer.png') }}"></div>
                                 Danh sách cán bộ
-                            </a>
-                            <a class="nav-link" href="/quan-ly-bo-phan">
-                                <div class="sb-nav-link-icon"><img class="side-bar-icon"
-                                        src="{{ asset('images/icons/officer.png') }}"></div>
-                                Danh sách bộ phận
                             </a>
                         @endif
                         <div class="sb-sidenav-menu-heading">Tài khoản</div>

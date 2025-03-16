@@ -15,7 +15,7 @@ class CanBoController extends Controller
     public function danhSachCanBo()
     {
         $data = CanBo::leftJoin('tai_khoan', 'can_bo.ma_tai_khoan', '=', 'tai_khoan.ma_tai_khoan')
-            ->get();
+            ->orderBy('ma_can_bo', 'desc')->get();
 
         $taiKhoans = TaiKhoan::where('quyen_han', 'Cán bộ')
             ->doesntHave('canBo')
@@ -39,8 +39,10 @@ class CanBoController extends Controller
         CanBo::create([
             'ten_can_bo' => $request->ten_can_bo,
             'chuc_danh' => $request->chuc_danh,
+            'nhom_vi_tri_lam_viec' => $request->nhom_vi_tri_lam_viec,
             'trang_thai' => $request->trang_thai,
             'ma_bo_phan' => $request->ma_bo_phan,
+            'ma_tai_khoan' => $ma_tai_khoan,
         ]);
         session()->flash('alert-success', 'Thêm cán bộ mới thành công');
         return redirect()->back();
@@ -74,11 +76,18 @@ class CanBoController extends Controller
                 'chuc_danh' => $request->chuc_danh,
                 'trang_thai' => $request->trang_thai,
                 'ma_bo_phan' => $request->ma_bo_phan,
+                'nhom_vi_tri_lam_viec' => $request->nhom_vi_tri_lam_viec,
             ]);
 
             if ($request->ma_tai_khoan != '') {
-                $taiKhoan =  TaiKhoan::find($request->ma_tai_khoan);
-                CanBo::find($ma_can_bo)->update(['ma_tai_khoan' => $taiKhoan->ma_tai_khoan]);;
+                TaiKhoan::find($request->ma_tai_khoan)->update([
+                    'quyen_han' => $request->quyen_han,
+                ]);
+                CanBo::find($ma_can_bo)->update(
+                    [
+                        'ma_tai_khoan' => $request->ma_tai_khoan,
+                    ]
+                );;
             }
 
             $canBo->save();

@@ -53,6 +53,9 @@
                                     Tên đăng nhập
                                 </th>
                                 <th>
+                                    Quyền hạn
+                                </th>
+                                <th>
                                     Trạng thái
                                 </th>
                                 <th>
@@ -64,24 +67,21 @@
                                     <tr data-ma-can-bo="{{ $canBo->ma_can_bo }}" data-ten-can-bo="{{ $canBo->ten_can_bo }}"
                                         data-ten-dang-nhap="{{ $canBo->ten_dang_nhap }}"
                                         data-ma-tai-khoan="{{ $canBo->ma_tai_khoan }}"
-                                        data-ngay-sinh="{{ $canBo->ngay_sinh }}"
-                                        data-trinh-do="{{ $canBo->trinh_do }}"
-                                        data-chuyen-mon="{{ $canBo->chuyen_mon }}"
-                                        data-chuc-danh="{{ $canBo->chuc_danh }}"
-                                        data-trang-thai="{{ $canBo->trang_thai }}"
-                                        >
+                                        data-quyen-han="{{ $canBo->quyen_han }}" data-chuc-danh="{{ $canBo->chuc_danh }}"
+                                        data-trang-thai="{{ $canBo->trang_thai }}">
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $canBo->ma_can_bo }}</td>
                                         <td>{{ $canBo->ten_can_bo }}</td>
-                                        <td>{{ $canBo->ma_bo_phan }}</td>
+                                        <td>{{ $canBo->boPhan->ten_bo_phan }}</td>
                                         <td>{{ $canBo->ten_dang_nhap }}</td>
+                                        <td>{{ $canBo->quyen_han }}</td>
                                         <td>
-                                            @if($canBo->trang_thai == 1)
+                                            @if ($canBo->trang_thai == 1)
                                                 Đang công tác
                                             @elseif($canBo->trang_thai == 0)
                                                 Nghỉ công tác
                                             @endif
-                                        
+
                                         </td>
                                         <td>
                                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#xoaModal"
@@ -115,7 +115,6 @@
                             <div class="col-12">
                                 <p class="mt-2"><strong>Mã cán bộ:</strong> <span id="modalMaCongChuc"></span></p>
                                 <input type="hidden" class="form-control" id="modalMaCongChucInput" name="ma_can_bo">
-
                                 <div class="row">
                                     <div class="col-6">
                                         <label class="mt-1" for="ten_can_bo"><strong>Tên cán bộ</strong></label>
@@ -130,57 +129,39 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="mt-1" for="trinh_do"><strong>Trình độ</strong></label>
-                                        <input type="text" class="form-control" id="modalTrinhDo" name="trinh_do"
-                                            max="50" placeholder="Nhập trình độ" required>
+                                        <label class="mt-1" for="nhom_vi_tri_lam_viec">
+                                            <strong>Nhóm vị trí làm việc</strong>
+                                        </label>
+                                        <input type="text" class="form-control" id="modalNhomViTriLamViec"
+                                            name="nhom_vi_tri_lam_viec" max="255" placeholder="Nhập vị trí làm việc"
+                                            value="{{ $canBo->nhom_vi_tri_lam_viec }}"
+                                            required>
                                     </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="chuyen_mon"><strong>Chuyên môn</strong></label>
-                                        <input type="text" class="form-control" id="modalChuyenMon" name="chuyen_mon"
-                                            max="50" placeholder="Nhập chuyên môn" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-1" for="ngay_sinh"><strong>Ngày sinh</strong></label>
-                                        <input type="text" id="modalNgaySinh" class="form-control"
-                                            placeholder="dd/mm/yyyy" name="ngay_sinh" autocomplete="off">
-
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="ngay_tuyen_dung"><strong>Ngày tuyển
-                                                dụng</strong></label>
-                                        <input type="text" id="modalNgayTuyenDung" class="form-control"
-                                            placeholder="dd/mm/yyyy" name="ngay_tuyen_dung" autocomplete="off">
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-6">
                                         <label class="mt-1" for="bo_phan"><strong>Bộ phận</strong></label>
                                         <select class="form-control" id="bo-phan-dropdown-search" name="ma_bo_phan">
                                             <option value=''></option>
                                             @foreach ($boPhans as $boPhan)
-                                                <option value="{{ $boPhan->ma_bo_phan }}">
-                                                    {{ $boPhan->ten_bo_phan }}
-                                                </option>
+                                                @if ($boPhan->ma_bo_phan == $canBo->ma_bo_phan)
+                                                    <option value="{{ $boPhan->ma_bo_phan }}" selected>
+                                                        {{ $boPhan->ten_bo_phan }}
+                                                    </option>
+                                                @endif
                                             @endforeach
-                                        </select>
-
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
-                                        <select class="form-control" id="trang-thai-dropdown-search" name="trang_thai">
-                                            <option value=''></option>
-                                            <option value='1'>Đang công tác</option>
-                                            <option value='0'>Nghỉ công tác</option>
                                         </select>
                                     </div>
                                 </div>
 
+                                <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
+                                <select class="form-control" id="trang-thai-dropdown-search" name="trang_thai">
+                                    <option value=''></option>
+                                    <option value='1' selected>Đang công tác</option>
+                                    <option value='0'>Nghỉ công tác</option>
+                                </select>
+
                                 <hr />
                                 <p class="mt-2"><strong>Tên đăng nhập:</strong> <span id="modalTenDangNhap"></span></p>
                                 <h5>Chọn tài khoản khác cho cán bộ này</h5>
-                                <em>(Danh sách chỉ hiện các tài khoản thuộc loại "Cán bộ" chưa được gán cho cán bộ nào)</em>
                                 <p><strong>Tên đăng nhập: </strong></p>
                                 <select class="form-control" id="tai-khoan-dropdown-search" name="ma_tai_khoan">
                                     <option value=''></option>
@@ -189,6 +170,12 @@
                                             {{ $taiKhoan->ten_dang_nhap }}
                                         </option>
                                     @endforeach
+                                </select>
+                                <label class="mt-1" for="trang_thai"><strong>Quyền tài khoản</strong></label>
+                                <select class="form-control" id="quyen-han-dropdown-search" name="quyen_han">
+                                    <option value='Cán bộ'>Cán bộ</option>
+                                    <option value='CBQL1' selected>Cán bộ quản lý 1</option>
+                                    <option value='CBQL2'>Cán bộ quản lý 2</option>
                                 </select>
                             </div>
                         </div>
@@ -214,51 +201,63 @@
                     @method('POST')
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-6">
-                                <label class="mt-1" for="ten_can_bo"><strong>Tên cán bộ</strong></label>
-                                <input type="text" class="form-control" id="ten_can_bo" name="ten_can_bo"
-                                    max="255" placeholder="Nhập tên cán bộ" required>
-                            </div>
-                            <div class="col-6">
-                                <label class="mt-1" for="chuc_danh"><strong>Chức danh</strong></label>
-                                <input type="text" class="form-control" id="chuc_danh" name="chuc_danh"
-                                    max="255" placeholder="Nhập chức danh" required>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="mt-1" for="ten_can_bo"><strong>Tên cán bộ</strong></label>
+                                        <input type="text" class="form-control" id="modalTenCongChuc"
+                                            name="ten_can_bo" max="255" placeholder="Nhập tên cán bộ" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="mt-1" for="chuc_danh"><strong>Chức danh</strong></label>
+                                        <input type="text" class="form-control" id="modalChucDanh" name="chuc_danh"
+                                            max="255" placeholder="Nhập chức danh" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="mt-1" for="nhom_vi_tri_lam_viec">
+                                            <strong>Nhóm vị trí làm việc</strong>
+                                        </label>
+                                        <input type="text" class="form-control" id="modalNhomViTriLamViec"
+                                            name="nhom_vi_tri_lam_viec" max="255" placeholder="Nhập vị trí làm việc"
+                                            required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="mt-1" for="bo_phan"><strong>Bộ phận</strong></label>
+                                        <select class="form-control" id="bo-phan-dropdown-search" name="ma_bo_phan">
+                                            <option value=''></option>
+                                            @foreach ($boPhans as $boPhan)
+                                                <option value="{{ $boPhan->ma_bo_phan }}">
+                                                    {{ $boPhan->ten_bo_phan }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
+                                <select class="form-control" id="trang-thai-dropdown-search" name="trang_thai">
+                                    <option value=''></option>
+                                    <option value='1' selected>Đang công tác</option>
+                                    <option value='0'>Nghỉ công tác</option>
+                                </select>
+
+                                <hr />
+                                <label class="mt-1" for="ten_dang_nhap"><strong>Tên đăng nhập</strong></label>
+                                <input type="text" class="form-control" id="ten_dang_nhap" name="ten_dang_nhap"
+                                    placeholder="Nhập tên đăng nhập"autocomplete="new-password" required>
+                                <label class="mt-1" for="mat_khau"><strong>Mật khẩu</strong></label>
+                                <input type="password" class="form-control" id="mat_khau" name="mat_khau"
+                                    placeholder="Nhập mật khẩu" autocomplete="new-password" required>
+                                <label class="mt-1" for="trang_thai"><strong>Quyền tài khoản</strong></label>
+                                <select class="form-control" id="quyen-han-dropdown-search" name="quyen_han">
+                                    <option value='Cán bộ' selected>Cán bộ</option>
+                                    <option value='CBQL1'>Cán bộ quản lý 1</option>
+                                    <option value='CBQL2'>Cán bộ quản lý 2</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="mt-1" for="trinh_do"><strong>Trình độ</strong></label>
-                                <input type="text" class="form-control" id="trinh_do" name="trinh_do"
-                                    max="50" placeholder="Nhập trình độ" required>
-                            </div>
-                            <div class="col-6">
-                                <label class="mt-1" for="chuyen_mon"><strong>Chuyên môn</strong></label>
-                                <input type="text" class="form-control" id="chuyen_mon" name="chuyen_mon"
-                                    max="50" placeholder="Nhập chuyên môn" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="mt-1" for="ngay_sinh"><strong>Ngày sinh</strong></label>
-                                <input type="text" id="ngay_sinh" class="form-control" placeholder="dd/mm/yyyy"
-                                    name="ngay_sinh" autocomplete="off">
-
-                            </div>
-                            <div class="col-6">
-                                <label class="mt-1" for="ngay_tuyen_dung"><strong>Ngày tuyển dụng</strong></label>
-                                <input type="text" id="ngay_tuyen_dung" class="form-control" placeholder="dd/mm/yyyy"
-                                    name="ngay_tuyen_dung" autocomplete="off">
-                            </div>
-                        </div>
-
-
-                        <hr />
-                        <label class="mt-1" for="ten_dang_nhap"><strong>Tên đăng nhập</strong></label>
-                        <input type="text" class="form-control" id="ten_dang_nhap" name="ten_dang_nhap"
-                            placeholder="Nhập tên đăng nhập"autocomplete="new-password" required>
-                        <label class="mt-1" for="mat_khau"><strong>Mật khẩu</strong></label>
-                        <input type="password" class="form-control" id="mat_khau" name="mat_khau"
-                            placeholder="Nhập mật khẩu" autocomplete="new-password" required>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Thêm mới</button>
@@ -322,34 +321,6 @@
     {{-- Script áp dụng cho 3 cột đầu --}}
     <script>
         $(document).ready(function() {
-            $('#ngay_sinh').datepicker({
-                format: 'dd/mm/yyyy',
-                autoclose: true,
-                todayHighlight: true,
-                language: 'vi',
-                endDate: '0d'
-            });
-            $('#ngay_tuyen_dung').datepicker({
-                format: 'dd/mm/yyyy',
-                autoclose: true,
-                todayHighlight: true,
-                language: 'vi',
-                endDate: '0d'
-            });
-            $('#modalNgaySinh').datepicker({
-                format: 'dd/mm/yyyy',
-                autoclose: true,
-                todayHighlight: true,
-                language: 'vi',
-                endDate: '0d'
-            });
-            $('#modalNgayTuyenDung').datepicker({
-                format: 'dd/mm/yyyy',
-                autoclose: true,
-                todayHighlight: true,
-                language: 'vi',
-                endDate: '0d'
-            });
 
             $('#dataTable tbody').on('click', 'tr', function(event) {
                 if ($(event.target).closest('td:last-child').length) {
@@ -360,37 +331,28 @@
                 var tenCongChuc = $(this).data('ten-can-bo');
                 var tenDangNhap = $(this).data('ten-dang-nhap');
                 var maTaiKhoan = $(this).data('ma-tai-khoan');
-                var ngaySinh = $(this).data('ngay-sinh');
-                var trinhDo = $(this).data('trinh-do');
-                var chuyenMon = $(this).data('chuyen-mon');
                 var chucDanh = $(this).data('chuc-danh');
-                var ngayTuyenDung = $(this).data('ngay-tuyen-dung');
                 var trangThai = $(this).data('trang-thai');
+                var phanQuyen = $(this).data('quyen-han');
+                var nhomViTriLamViec = $(this).data('nhom-vi-tri-lam-viec');
 
                 document.getElementById('modalMaCongChuc').value = maCongChuc;
                 document.getElementById('modalTenCongChuc').value = tenCongChuc;
-                document.getElementById('modalTrinhDo').value = trinhDo;
-                document.getElementById('modalChuyenMon').value = chuyenMon;
                 document.getElementById('modalChucDanh').value = chucDanh;
-
-                var ngayTuyenDungFormatted = ngayTuyenDung.split('-').reverse().join('/');
-                document.getElementById('modalNgayTuyenDung').value = ngayTuyenDungFormatted;
-                var ngaySinhFormatted = ngaySinh.split('-').reverse().join('/');
-                document.getElementById('modalNgaySinh').value = ngaySinhFormatted;
-
-                // document.getElementById('modalTrangThai').value = trangThai;
 
                 $('#modalTenDangNhap').text(tenDangNhap);
                 document.getElementById('modalMaCongChuc').value = maCongChuc;
                 const modalMaCongChuc = document.getElementById('modalMaCongChuc');
                 modalMaCongChuc.textContent = maCongChuc;
 
-                const selectTrangThai= document.getElementById('trang-thai-dropdown-search');
-                if(trangThai == 0){
+                const selectTrangThai = document.getElementById('trang-thai-dropdown-search');
+                if (trangThai == 0) {
                     selectTrangThai.value = "0";
                 } else {
                     selectTrangThai.value = "1";
                 }
+
+
 
 
                 const selectTaiKhoan = document.getElementById('tai-khoan-dropdown-search');
@@ -400,6 +362,14 @@
                 selectTaiKhoan.add(newOption);
                 newOption.selected = true;
 
+                const selectQuyenHan = document.getElementById('quyen-han-dropdown-search');
+                if (phanQuyen == "CBQL1") {
+                    selectQuyenHan.value = "CBQL1";
+                } else if (phanQuyen == "CBQL2") {
+                    selectQuyenHan.value = "CBQL2";
+                } else {
+                    selectQuyenHan.value = "Cán bộ";
+                }
 
                 const modalInputMaCongChuc = document.getElementById('modalMaCongChucInput');
                 modalInputMaCongChuc.value = maCongChuc;

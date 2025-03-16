@@ -22,7 +22,7 @@
             {{-- <a class="navbar-brand" href="/">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
             </a> --}}
-            <a class="navbar-brand" href="/">HỆ THỐNG THEO DÕI XUẤT - NHẬP - TỒN</a>
+            <a class="navbar-brand" href="/">HỆ THỐNG HỖ TRỢ PHÂN CÔNG NHIỆM VỤ</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -35,27 +35,24 @@
 
                     <!-- Menu có dropdown Giới thiệu-->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/" id="courseDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="#" id="courseDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Giới thiệu
+                            Hoạt động
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="courseDropdown">
-                            @if (Auth::user())
-                                @if (Auth::user()->quyen_han == 'Cán bộ')
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                        <strong class="ms-3">Hướng dẫn công chức</strong>
+                        @if (Auth::user())
+                            @if (Auth::user()->quyen_han == 'Admin')
+                                <ul class="dropdown-menu" aria-labelledby="courseDropdown">
+                                    <li><a class="dropdown-item" href="/quan-ly-tai-khoan">Quản lý tài khoản</a>
+                                    <li><a class="dropdown-item" href="/quan-ly-can-bo">Quản lý cán bộ</a>
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Hướng dẫn Quản lý nhập hàng</a>
+                                </ul>
+                            @elseif(Auth::user()->quyen_han != 'Admin')
+                                <ul class="dropdown-menu" aria-labelledby="courseDropdown">
+                                    <li><a class="dropdown-item" href="/quan-ly-bo-phan">Quản lý bộ phận</a>
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Hướng dẫn Quản lý xuất hàng</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Hướng dẫn Quản lý yêu cầu</a>
-                                    </li>
-                                @endif
+                                </ul>
                             @endif
-
-                        </ul>
+                        @endif
                     </li>
                     @if (Auth::user())
                         <li class="nav-item">
@@ -87,8 +84,7 @@
                 <!-- Phần Giới thiệu -->
                 <div class="col-md-4 mb-3">
                     <h5 class="text-white">Giới thiệu</h5>
-                    <p>Website này cung cấp cổng đăng ký thực hiện các thủ tục nhập kho, xuất kho, quản lý hàng
-                        trong kho,...</p>
+                    <p>Website này cung cấp ...</p>
                 </div>
 
                 <!-- Phần liên hệ -->
@@ -105,15 +101,15 @@
                 <div class="col-md-4 mb-3">
                     <h5 class="text-white">Theo dõi chúng tôi</h5>
                     <ul class="list-inline">
-                        <li class="list-inline-item"><a href="#" class="text-white"><i
-                                    class="bi bi-facebook"></i> Facebook</a></li>
-                        <li class="list-inline-item"><a href="#" class="text-white"><i
-                                    class="bi bi-twitter"></i> Twitter</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-white"><i class="bi bi-facebook"></i>
+                                Facebook</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-white"><i class="bi bi-twitter"></i>
+                                Twitter</a></li>
                         <li class="list-inline-item"><a href="#" class="text-white"><i
                                     class="bi bi-instagram"></i> Instagram</a>
                         </li>
-                        <li class="list-inline-item"><a href="#" class="text-white"><i
-                                    class="bi bi-linkedin"></i> LinkedIn</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-white"><i class="bi bi-linkedin"></i>
+                                LinkedIn</a></li>
                     </ul>
                 </div>
 
