@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Mar 16, 2025 at 07:55 AM
+-- Generation Time: Mar 16, 2025 at 08:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `bo_phan` (
   `ma_bo_phan` varchar(10) NOT NULL,
   `ten_bo_phan` varchar(255) NOT NULL,
-  `chuc_nang_nhiem_vu` varchar(255) NOT NULL,
-  `thoi_gian_thanh_lap` date NOT NULL,
-  `thoi_gian_giai_the` date NOT NULL,
+  `chuc_nang_nhiem_vu` varchar(255) DEFAULT NULL,
+  `thoi_gian_thanh_lap` date DEFAULT NULL,
+  `thoi_gian_giai_the` date DEFAULT NULL,
   `trang_thai` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -71,7 +71,7 @@ DELIMITER ;
 
 CREATE TABLE `can_bo` (
   `ma_can_bo` varchar(10) NOT NULL,
-  `ma_bo_phan` varchar(50) NOT NULL,
+  `ma_bo_phan` varchar(50) DEFAULT NULL,
   `ten_can_bo` varchar(255) NOT NULL,
   `chuc_danh` varchar(50) DEFAULT NULL,
   `trang_thai` tinyint(4) NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE `dieu_chuyen` (
   `thoi_gian_dieu_chuyen` date NOT NULL,
   `ma_bo_phan_chuyen_den` varchar(50) NOT NULL,
   `chuc_danh_moi` varchar(50) NOT NULL,
-  `ly_do` varchar(255) NOT NULL
+  `ly_do` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -145,12 +145,12 @@ CREATE TABLE `dieu_chuyen` (
 CREATE TABLE `nghi_phep` (
   `ma_nghi_phep` int(11) NOT NULL,
   `ma_can_bo` varchar(50) NOT NULL,
-  `ngay_lam_viec` date NOT NULL,
-  `tu_gio` varchar(50) NOT NULL,
-  `den_gio` varchar(50) NOT NULL,
+  `ngay_lam_viec` date DEFAULT NULL,
+  `tu_gio` varchar(50) DEFAULT NULL,
+  `den_gio` varchar(50) DEFAULT NULL,
   `ngay_bat_dau` date NOT NULL,
   `ngay_ket_thuc` date NOT NULL,
-  `ly_do_vang` varchar(255) NOT NULL
+  `ly_do_vang` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -164,9 +164,9 @@ CREATE TABLE `phan_cong` (
   `ma_cong_viec` int(11) NOT NULL,
   `ma_can_bo_giao` varchar(50) NOT NULL,
   `ma_can_bo_nhan` varchar(50) NOT NULL,
-  `ngay_phan_cong` date NOT NULL,
-  `ngay_nhan_viec` date NOT NULL,
-  `chi_tiet` varchar(255) NOT NULL
+  `ngay_phan_cong` date DEFAULT NULL,
+  `ngay_nhan_viec` date DEFAULT NULL,
+  `chi_tiet` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -200,10 +200,10 @@ INSERT INTO `tai_khoan` (`ma_tai_khoan`, `ten_dang_nhap`, `mat_khau`, `quyen_han
 CREATE TABLE `thoi_han_hoan_thanh` (
   `ma_thoi_han` int(11) NOT NULL,
   `ma_cong_viec` int(11) NOT NULL,
-  `moc_thoi_gian` varchar(255) NOT NULL,
-  `ngay_het_han` varchar(50) NOT NULL,
-  `thang_het_han` varchar(50) NOT NULL,
-  `noi_nhan` varchar(50) NOT NULL
+  `moc_thoi_gian` varchar(255) DEFAULT NULL,
+  `ngay_het_han` varchar(50) DEFAULT NULL,
+  `thang_het_han` varchar(50) DEFAULT NULL,
+  `noi_nhan` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
