@@ -5,6 +5,7 @@ use App\Http\Controllers\CanBoController;
 use App\Http\Controllers\BaoCaoController;
 use App\Http\Controllers\BoPhanController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\NghiPhepController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home-page');
@@ -26,6 +27,9 @@ Route::middleware([\App\Http\Middleware\CheckRoleAdmin::class])->group(function 
         Route::post('/them-can-bo', [CanBoController::class, 'themCanBo'])->name('them-can-bo');
         Route::post('/update-can-bo', [CanBoController::class, 'updateCanBo'])->name('update-can-bo');
         Route::post('/xoa-can-bo', [CanBoController::class, 'xoaCanBo'])->name('xoa-can-bo');
+
+
+        Route::get('/quan-ly-nghi-phep', [NghiPhepController::class, 'index'])->name('quan-ly-nghi-phep');
     });
 });
 Route::middleware([\App\Http\Middleware\CheckRoleCanBo::class])->group(function () {
