@@ -9,20 +9,17 @@ class CanBo extends Model
     protected $connection = 'mysql';
     protected $table = 'can_bo';
     protected $primaryKey = 'ma_can_bo';
-    public $incrementing = false; // Ensure this is false if your primary key is not auto-incrementing
-    protected $keyType = 'string'; // This is important if the key is a string like '61PA'}
+    public $incrementing = false;
+    protected $keyType = 'string';
     public $timestamps = false;
     protected $fillable = [
         'ma_can_bo',
         'ma_bo_phan',
         'ten_can_bo',
-        'ngay_sinh',
-        'trinh_do',
-        'chuyen_mon',
         'chuc_danh',
-        'ngay_tuyen_dung',
         'trang_thai',
         'ma_tai_khoan',
+        'nhom_vi_tri_lam_viec',
     ];
 
     public function boPhan()

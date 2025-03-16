@@ -50,19 +50,19 @@
                                 @foreach ($data as $index => $taiKhoan)
                                     <tr data-ma-tai-khoan="{{ $taiKhoan->ma_tai_khoan }}"
                                         data-ten-dang-nhap="{{ $taiKhoan->ten_dang_nhap }}"
-                                        data-loai-tai-khoan="{{ $taiKhoan->loai_tai_khoan }}">
+                                        data-quyen-han="{{ $taiKhoan->quyen_han }}">
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $taiKhoan->ten_dang_nhap }}</td>
-                                        <td>{{ $taiKhoan->loai_tai_khoan }}</td>
+                                        <td>{{ $taiKhoan->quyen_han }}</td>
                                         <td>{{ $taiKhoan->created_at }}</td>
-                                        @if ($taiKhoan->loai_tai_khoan == 'Doanh nghiệp')
+                                        @if ($taiKhoan->quyen_han == 'Doanh nghiệp')
                                             <td></td>
                                         @else
                                             <td><button class="btn btn-danger" data-bs-toggle="modal"
                                                     data-bs-target="#xoaModal"
                                                     data-ma-tai-khoan="{{ $taiKhoan->ma_tai_khoan }}"
                                                     data-ten-dang-nhap="{{ $taiKhoan->ten_dang_nhap }}"
-                                                    data-loai-tai-khoan="{{ $taiKhoan->loai_tai_khoan }}">
+                                                    data-quyen-han="{{ $taiKhoan->quyen_han }}">
                                                     Xóa
                                                 </button></td>
                                         @endif
@@ -124,8 +124,8 @@
                         <input type="password" class="form-control" id="mat_khau" name="mat_khau"
                             placeholder="Nhập mật khẩu" autocomplete="new-password" required>
 
-                        <label class="mt-3" for="loai_tai_khoan">Loại tài khoản</label>
-                        <select class="form-control" id="loai-tai-khoan-dropdown" name="loai_tai_khoan"
+                        <label class="mt-3" for="quyen_han">Loại tài khoản</label>
+                        <select class="form-control" id="quyen-han-dropdown" name="quyen_han"
                             aria-placeholder="Chọn loại tài khoản" required>
                             <option></option>
                             <option value="Admin">Admin</option>
@@ -188,7 +188,7 @@
                 // Get data from the clicked row
                 var maTaiKhoan = $(this).data('ma-tai-khoan');
                 var tenDangNhap = $(this).data('ten-dang-nhap');
-                var loaiTaiKhoan = $(this).data('loai-tai-khoan');
+                var loaiTaiKhoan = $(this).data('quyen-han');
 
                 // Set the data in the modal
                 $('#modalMaTaiKhoan').text(maTaiKhoan);
@@ -213,7 +213,7 @@
                     // Get data from the clicked button
                     const maTaiKhoan = this.getAttribute('data-ma-tai-khoan');
                     const tenDangNhap = this.getAttribute('data-ten-dang-nhap');
-                    const loaiTaiKhoan = this.getAttribute('data-loai-tai-khoan');
+                    const loaiTaiKhoan = this.getAttribute('data-quyen-han');
 
                     // Set data in the modal
                     modalTenDangNhap.textContent = tenDangNhap;

@@ -68,7 +68,6 @@
                                         data-trinh-do="{{ $canBo->trinh_do }}"
                                         data-chuyen-mon="{{ $canBo->chuyen_mon }}"
                                         data-chuc-danh="{{ $canBo->chuc_danh }}"
-                                        data-ngay-tuyen-dung="{{ $canBo->ngay_tuyen_dung }}"
                                         data-trang-thai="{{ $canBo->trang_thai }}"
                                         >
                                         <td>{{ $index + 1 }}</td>

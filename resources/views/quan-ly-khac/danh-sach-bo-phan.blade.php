@@ -54,29 +54,28 @@
                                 </th>
                             </thead>
                             <tbody class="clickable-row">
-                                @foreach ($data as $index => $canBo)
-                                    <tr data-ma-bo-phan="{{ $canBo->ma_bo_phan }}"
-                                        data-ten-bo-phan="{{ $canBo->ten_bo_phan }}"
-                                        data-chuc-nang-nhiem-vu="{{ $canBo->chuc_nang_nhiem_vu }}"
-                                        data-thoi-gian-thanh-lap="{{ $canBo->thoi_gian_thanh_lap }}"
-                                        data-thoi-gian-giai-the="{{ $canBo->thoi_gian_giai_the }}"
-                                        data-trang-thai="{{ $canBo->trang_thai }}"
-                                        >
+                                @foreach ($data as $index => $boPhan)
+                                    <tr data-ma-bo-phan="{{ $boPhan->ma_bo_phan }}"
+                                        data-ten-bo-phan="{{ $boPhan->ten_bo_phan }}"
+                                        data-chuc-nang-nhiem-vu="{{ $boPhan->chuc_nang_nhiem_vu }}"
+                                        data-thoi-gian-thanh-lap="{{ $boPhan->thoi_gian_thanh_lap }}"
+                                        data-thoi-gian-giai-the="{{ $boPhan->thoi_gian_giai_the }}"
+                                        data-trang-thai="{{ $boPhan->trang_thai }}">
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $canBo->ma_bo_phan }}</td>
-                                        <td>{{ $canBo->ten_bo_phan }}</td>
+                                        <td>{{ $boPhan->ma_bo_phan }}</td>
+                                        <td>{{ $boPhan->ten_bo_phan }}</td>
                                         <td>
-                                            @if ($canBo->trang_thai == 1)
-                                                Đang công tác
-                                            @elseif($canBo->trang_thai == 0)
-                                                Nghỉ công tác
+                                            @if ($boPhan->trang_thai == 1)
+                                                Đang hoạt động
+                                            @elseif($boPhan->trang_thai == 0)
+                                                Ngừng hoạt động
                                             @endif
 
                                         </td>
                                         <td>
                                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#xoaModal"
-                                                data-ma-bo-phan="{{ $canBo->ma_bo_phan }}"
-                                                data-ten-bo-phan="{{ $canBo->ten_bo_phan }}">
+                                                data-ma-bo-phan="{{ $boPhan->ma_bo_phan }}"
+                                                data-ten-bo-phan="{{ $boPhan->ten_bo_phan }}">
                                                 Xóa
                                             </button>
                                         </td>
@@ -91,13 +90,13 @@
     </div>
     <!-- Thông tin Modal -->
     <div class="modal fade" id="thongTinModal" tabindex="-1" aria-labelledby="thongTinModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="thongTinModalLabel">Thông tin bộ phận</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.update-can-bo') }}" method="POST">
+                <form action="{{ route('quan-ly-khac.update-bo-phan') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -106,81 +105,29 @@
                                 <p class="mt-2"><strong>Mã bộ phận:</strong> <span id="modalMaBoPhan"></span></p>
                                 <input type="hidden" class="form-control" id="modalMaBoPhanInput" name="ma_bo_phan">
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-1" for="ten_bo_phan"><strong>Tên bộ phận</strong></label>
-                                        <input type="text" class="form-control" id="modalTenBoPhan" name="ten_bo_phan"
-                                            max="255" placeholder="Nhập tên bộ phận" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="chuc_danh"><strong>Chức danh</strong></label>
-                                        <input type="text" class="form-control" id="modalChucDanh" name="chuc_danh"
-                                            max="255" placeholder="Nhập chức danh" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-1" for="trinh_do"><strong>Trình độ</strong></label>
-                                        <input type="text" class="form-control" id="modalTrinhDo" name="trinh_do"
-                                            max="50" placeholder="Nhập trình độ" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="chuyen_mon"><strong>Chuyên môn</strong></label>
-                                        <input type="text" class="form-control" id="modalChuyenMon" name="chuyen_mon"
-                                            max="50" placeholder="Nhập chuyên môn" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-1" for="ngay_sinh"><strong>Ngày sinh</strong></label>
-                                        <input type="text" id="modalNgaySinh" class="form-control"
-                                            placeholder="dd/mm/yyyy" name="ngay_sinh" autocomplete="off">
+                                <label class="mt-1" for="ten_bo_phan"><strong>Tên bộ phận</strong></label>
+                                <input type="text" class="form-control" id="modalTenBoPhan" name="ten_bo_phan"
+                                    max="255" placeholder="Nhập tên bộ phận" required>
 
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="ngay_tuyen_dung"><strong>Ngày tuyển
-                                                dụng</strong></label>
-                                        <input type="text" id="modalNgayTuyenDung" class="form-control"
-                                            placeholder="dd/mm/yyyy" name="ngay_tuyen_dung" autocomplete="off">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="mt-1" for="bo_phan"><strong>Bộ phận</strong></label>
-                                        <select class="form-control" id="bo-phan-dropdown-search" name="ma_bo_phan">
-                                            <option value=''></option>
-                                            @foreach ($boPhans as $boPhan)
-                                                <option value="{{ $boPhan->ma_bo_phan }}">
-                                                    {{ $boPhan->ten_bo_phan }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                <label class="mt-1" for="chuc_nang_nhiem_vu"><strong>Chức năng nhiệm vụ</strong></label>
+                                <input type="text" class="form-control" id="modalChucNangNhiemVu"
+                                    name="chuc_nang_nhiem_vu" max="255" placeholder="Nhập chức năng nhiệm vụ" required>
 
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
-                                        <select class="form-control" id="trang-thai-dropdown-search" name="trang_thai">
-                                            <option value=''></option>
-                                            <option value='1'>Đang công tác</option>
-                                            <option value='0'>Nghỉ công tác</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <label class="mt-1" for="thoi_gian_thanh_lap"><strong>Thời gian thành lập</strong></label>
+                                <input type="text" id="modalThanhLap" class="form-control" placeholder="dd/mm/yyyy"
+                                    name="thoi_gian_thanh_lap" autocomplete="off">
 
-                                <hr />
-                                <p class="mt-2"><strong>Tên đăng nhập:</strong> <span id="modalTenDangNhap"></span></p>
-                                <h5>Chọn tài khoản khác cho bộ phận này</h5>
-                                <em>(Danh sách chỉ hiện các tài khoản thuộc loại "Cán bộ" chưa được gán cho bộ phận
-                                    nào)</em>
-                                <p><strong>Tên đăng nhập: </strong></p>
-                                <select class="form-control" id="tai-khoan-dropdown-search" name="ma_tai_khoan">
+                                <label class="mt-1" for="thoi_gian_giai_the"><strong>Thời gian giải thể</strong></label>
+                                <input type="text" id="modalGiaiThe" class="form-control" placeholder="dd/mm/yyyy"
+                                    name="thoi_gian_giai_the" autocomplete="off">
+
+                                <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
+                                <select class="form-control" id="trang-thai-dropdown-search" name="trang_thai">
                                     <option value=''></option>
-                                    @foreach ($taiKhoans as $taiKhoan)
-                                        <option value="{{ $taiKhoan->ma_tai_khoan }}">
-                                            {{ $taiKhoan->ten_dang_nhap }}
-                                        </option>
-                                    @endforeach
+                                    <option value='1'>Đang hoạt động</option>
+                                    <option value='0'>Ngừng hoạt động</option>
                                 </select>
+
                             </div>
                         </div>
                     </div>
@@ -194,62 +141,38 @@
     </div>
     <!-- Modal Thêm -->
     <div class="modal fade" id="themModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Thêm bộ phận mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.them-can-bo') }}" method="POST">
+                <form action="{{ route('quan-ly-khac.them-bo-phan') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="mt-1" for="ten_bo_phan"><strong>Tên bộ phận</strong></label>
-                                <input type="text" class="form-control" id="ten_bo_phan" name="ten_bo_phan"
-                                    max="255" placeholder="Nhập tên bộ phận" required>
-                            </div>
-                            <div class="col-6">
-                                <label class="mt-1" for="chuc_danh"><strong>Chức danh</strong></label>
-                                <input type="text" class="form-control" id="chuc_danh" name="chuc_danh"
-                                    max="255" placeholder="Nhập chức danh" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="mt-1" for="trinh_do"><strong>Trình độ</strong></label>
-                                <input type="text" class="form-control" id="trinh_do" name="trinh_do"
-                                    max="50" placeholder="Nhập trình độ" required>
-                            </div>
-                            <div class="col-6">
-                                <label class="mt-1" for="chuyen_mon"><strong>Chuyên môn</strong></label>
-                                <input type="text" class="form-control" id="chuyen_mon" name="chuyen_mon"
-                                    max="50" placeholder="Nhập chuyên môn" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="mt-1" for="ngay_sinh"><strong>Ngày sinh</strong></label>
-                                <input type="text" id="ngay_sinh" class="form-control" placeholder="dd/mm/yyyy"
-                                    name="ngay_sinh" autocomplete="off">
+                        <label class="mt-1" for="ten_bo_phan"><strong>Tên bộ phận</strong></label>
+                        <input type="text" class="form-control" id="modalTenBoPhan" name="ten_bo_phan"
+                            max="255" placeholder="Nhập tên bộ phận" required>
 
-                            </div>
-                            <div class="col-6">
-                                <label class="mt-1" for="ngay_tuyen_dung"><strong>Ngày tuyển dụng</strong></label>
-                                <input type="text" id="ngay_tuyen_dung" class="form-control" placeholder="dd/mm/yyyy"
-                                    name="ngay_tuyen_dung" autocomplete="off">
-                            </div>
-                        </div>
+                        <label class="mt-1" for="chuc_nang_nhiem_vu"><strong>Chức năng nhiệm vụ</strong></label>
+                        <input type="text" class="form-control" id="modalChucNangNhiemVu" name="chuc_nang_nhiem_vu"
+                            max="255" placeholder="Nhập chức năng nhiệm vụ" required>
 
+                        <label class="mt-1" for="thoi_gian_thanh_lap"><strong>Thời gian thành lập</strong></label>
+                        <input type="text" id="thoi_gian_thanh_lap" class="form-control" placeholder="dd/mm/yyyy"
+                            name="thoi_gian_thanh_lap" autocomplete="off">
 
-                        <hr />
-                        <label class="mt-1" for="ten_dang_nhap"><strong>Tên đăng nhập</strong></label>
-                        <input type="text" class="form-control" id="ten_dang_nhap" name="ten_dang_nhap"
-                            placeholder="Nhập tên đăng nhập"autocomplete="new-password" required>
-                        <label class="mt-1" for="mat_khau"><strong>Mật khẩu</strong></label>
-                        <input type="password" class="form-control" id="mat_khau" name="mat_khau"
-                            placeholder="Nhập mật khẩu" autocomplete="new-password" required>
+                        <label class="mt-1" for="thoi_gian_giai_the"><strong>Thời gian giải thể</strong></label>
+                        <input type="text" id="thoi_gian_giai_the" class="form-control" placeholder="dd/mm/yyyy"
+                            name="thoi_gian_giai_the" autocomplete="off">
+
+                        <label class="mt-1" for="trang_thai"><strong>Trạng thái</strong></label>
+                        <select class="form-control" id="trang-thai-dropdown-search-2" name="trang_thai">
+                            <option value=''></option>
+                            <option value='1'>Đang hoạt động</option>
+                            <option value='0'>Ngừng hoạt động</option>
+                        </select>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Thêm mới</button>
@@ -269,7 +192,7 @@
                     <h4 class="modal-title">Xác nhận xóa bộ phận</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.xoa-can-bo') }}" method="POST">
+                <form action="{{ route('quan-ly-khac.xoa-bo-phan') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -313,28 +236,28 @@
     {{-- Script áp dụng cho 3 cột đầu --}}
     <script>
         $(document).ready(function() {
-            $('#ngay_sinh').datepicker({
+            $('#thoi_gian_thanh_lap').datepicker({
                 format: 'dd/mm/yyyy',
                 autoclose: true,
                 todayHighlight: true,
                 language: 'vi',
                 endDate: '0d'
             });
-            $('#ngay_tuyen_dung').datepicker({
+            $('#thoi_gian_giai_the').datepicker({
                 format: 'dd/mm/yyyy',
                 autoclose: true,
                 todayHighlight: true,
                 language: 'vi',
                 endDate: '0d'
             });
-            $('#modalNgaySinh').datepicker({
+            $('#modalGiaiThe').datepicker({
                 format: 'dd/mm/yyyy',
                 autoclose: true,
                 todayHighlight: true,
                 language: 'vi',
                 endDate: '0d'
             });
-            $('#modalNgayTuyenDung').datepicker({
+            $('#modalThanhLap').datepicker({
                 format: 'dd/mm/yyyy',
                 autoclose: true,
                 todayHighlight: true,
@@ -346,28 +269,24 @@
                 if ($(event.target).closest('td:last-child').length) {
                     return;
                 }
-
                 var maBoPhan = $(this).data('ma-bo-phan');
                 var tenBoPhan = $(this).data('ten-bo-phan');
-                var tenDangNhap = $(this).data('ten-dang-nhap');
-                var maTaiKhoan = $(this).data('ma-tai-khoan');
+                var chucNangNhiemVu = $(this).data('chuc-nang-nhiem-vu');
+                var thoiGianGiaiThe = $(this).data('thoi-gian-giai-the');
+                var thoiGianThanhLap = $(this).data('thoi-gian-thanh-lap');
                 var trangThai = $(this).data('trang-thai');
 
                 document.getElementById('modalMaBoPhan').value = maBoPhan;
                 document.getElementById('modalTenBoPhan').value = tenBoPhan;
-                document.getElementById('modalTrinhDo').value = trinhDo;
-                document.getElementById('modalChuyenMon').value = chuyenMon;
-                document.getElementById('modalChucDanh').value = chucDanh;
+                document.getElementById('modalChucNangNhiemVu').value = chucNangNhiemVu;
 
-                var ngayTuyenDungFormatted = ngayTuyenDung.split('-').reverse().join('/');
-                document.getElementById('modalNgayTuyenDung').value = ngayTuyenDungFormatted;
-                var ngaySinhFormatted = ngaySinh.split('-').reverse().join('/');
-                document.getElementById('modalNgaySinh').value = ngaySinhFormatted;
+                var thoiGianThanhLapFormatted = thoiGianThanhLap.split('-').reverse().join('/');
+                document.getElementById('modalThanhLap').value = thoiGianThanhLapFormatted;
+                var thoiGianThanhLapFormatted = thoiGianThanhLap.split('-').reverse().join('/');
+                document.getElementById('modalGiaiThe').value = thoiGianThanhLapFormatted;
 
                 // document.getElementById('modalTrangThai').value = trangThai;
 
-                $('#modalTenDangNhap').text(tenDangNhap);
-                document.getElementById('modalMaBoPhan').value = maBoPhan;
                 const modalMaBoPhan = document.getElementById('modalMaBoPhan');
                 modalMaBoPhan.textContent = maBoPhan;
 
@@ -377,14 +296,6 @@
                 } else {
                     selectTrangThai.value = "1";
                 }
-
-
-                const selectTaiKhoan = document.getElementById('tai-khoan-dropdown-search');
-                const newOption = document.createElement('option');
-                newOption.value = maTaiKhoan;
-                newOption.text = tenDangNhap;
-                selectTaiKhoan.add(newOption);
-                newOption.selected = true;
 
 
                 const modalInputMaBoPhan = document.getElementById('modalMaBoPhanInput');

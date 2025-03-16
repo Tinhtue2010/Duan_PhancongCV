@@ -113,10 +113,10 @@
                             </a>
                         </li>
                         <li class="nav-item text-primary text-center ms-2">
-                            @if (Auth::user()->loai_tai_khoan == 'Cán bộ')
+                            @if (Auth::user()->quyen_han == 'Cán bộ')
                                 <span class="text-primary">{{ Auth::user()->CanBo->ten_can_bo }}</span>
                                 (<span>{{ Auth::user()->CanBo->ma_can_bo }}</span>)
-                            @elseif (Auth::user()->loai_tai_khoan == 'Doanh nghiệp')
+                            @elseif (Auth::user()->quyen_han == 'Doanh nghiệp')
                                 <div id="doanh-nghiep-text">
                                     {{ Auth::user()->doanhNghiep->ten_doanh_nghiep }} ({{ Auth::user()->doanhNghiep->chuHang->ten_chu_hang ?? '' }})
                                     
@@ -143,14 +143,14 @@
             <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        @if (Auth::user()->loai_tai_khoan === 'Cán bộ')
+                        @if (Auth::user()->quyen_han === 'Cán bộ')
                             <div class="sb-sidenav-menu-heading">Quản lý nhập hàng</div>
                             <a class="nav-link" href="/quan-ly-nhap-hang">
                                 <div class="sb-nav-link-icon"><img class="side-bar-icon"
                                         src="{{ asset('images/icons/import-goods.png') }}"></div>
                                 Quản lý tờ khai nhập
                             </a>
-                        @elseif (Auth::user()->loai_tai_khoan === 'Admin')
+                        @elseif (Auth::user()->quyen_han === 'Admin')
                             <div class="sb-sidenav-menu-heading">Quản lý thông tin</div>
                             <a class="nav-link" href="/quan-ly-tai-khoan">
                                 <div class="sb-nav-link-icon"><img class="side-bar-icon"
@@ -161,6 +161,11 @@
                                 <div class="sb-nav-link-icon"><img class="side-bar-icon"
                                         src="{{ asset('images/icons/officer.png') }}"></div>
                                 Danh sách cán bộ
+                            </a>
+                            <a class="nav-link" href="/quan-ly-bo-phan">
+                                <div class="sb-nav-link-icon"><img class="side-bar-icon"
+                                        src="{{ asset('images/icons/officer.png') }}"></div>
+                                Danh sách bộ phận
                             </a>
                         @endif
                         <div class="sb-sidenav-menu-heading">Tài khoản</div>

@@ -17,7 +17,7 @@ class CanBoController extends Controller
         $data = CanBo::leftJoin('tai_khoan', 'can_bo.ma_tai_khoan', '=', 'tai_khoan.ma_tai_khoan')
             ->get();
 
-        $taiKhoans = TaiKhoan::where('loai_tai_khoan', 'Cán bộ')
+        $taiKhoans = TaiKhoan::where('quyen_han', 'Cán bộ')
             ->doesntHave('canBo')
             ->get();
         $boPhans = BoPhan::all();
@@ -31,25 +31,21 @@ class CanBoController extends Controller
             session()->flash('alert-danger', 'Mã cán bộ này đã tồn tại.');
             return redirect()->back();
         }
-        $ma_tai_khoan = $this->taoTaiKhoan($request->ten_dang_nhap, $request->mat_khau, "Cán bộ");
+        $ma_tai_khoan = $this->taoTaiKhoan($request->ten_dang_nhap, $request->mat_khau, $request->quyen_han);
         if (!$ma_tai_khoan) {
             session()->flash('alert-danger', 'Tên đăng nhập này đã được sử dụng.');
             return redirect()->back();
         }
         CanBo::create([
             'ten_can_bo' => $request->ten_can_bo,
-            'ngay_sinh' => $request->ngay_sinh,
-            'trinh_do' => $request->trinh_do,
-            'chuyen_mon' => $request->chuyen_mon,
             'chuc_danh' => $request->chuc_danh,
-            'ngay_tuyen_dung' => $request->ngay_tuyen_dung,
             'trang_thai' => $request->trang_thai,
             'ma_bo_phan' => $request->ma_bo_phan,
         ]);
         session()->flash('alert-success', 'Thêm cán bộ mới thành công');
         return redirect()->back();
     }
-    public function taoTaiKhoan($ten_dang_nhap, $mat_khau, $loai_tai_khoan)
+    public function taoTaiKhoan($ten_dang_nhap, $mat_khau, $quyen_han)
     {
         if (!TaiKhoan::where('ten_dang_nhap', $ten_dang_nhap)->get()->isEmpty()) {
             return false;
@@ -57,7 +53,7 @@ class CanBoController extends Controller
         $taiKhoan = TaiKhoan::create([
             'ten_dang_nhap' => $ten_dang_nhap,
             'mat_khau' => Hash::make($mat_khau),
-            'loai_tai_khoan' => $loai_tai_khoan,
+            'quyen_han' => $quyen_han,
         ]);
         return $taiKhoan->ma_tai_khoan;
     }
@@ -75,11 +71,7 @@ class CanBoController extends Controller
         if ($canBo) {
             $canBo->update([
                 'ten_can_bo' => $request->ten_can_bo,
-                'ngay_sinh' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->ngay_sinh)->format('Y-m-d'),
-                'trinh_do' => $request->trinh_do,
-                'chuyen_mon' => $request->chuyen_mon,
                 'chuc_danh' => $request->chuc_danh,
-                'ngay_tuyen_dung' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->ngay_tuyen_dung)->format('Y-m-d'),
                 'trang_thai' => $request->trang_thai,
                 'ma_bo_phan' => $request->ma_bo_phan,
             ]);

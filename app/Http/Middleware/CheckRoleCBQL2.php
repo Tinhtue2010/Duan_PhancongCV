@@ -6,14 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckRoleAdmin
+class CheckRoleCBQL2
 {
     public function handle(Request $request, Closure $next)
     {   
         if(!$request->user()){
             return redirect('dang-nhap');
         }
-        elseif ($request->user() && $request->user()->quyen_han !== "Admin") {
+        elseif ($request->user() && $request->user()->quyen_han !== "CBQL2") {
             return redirect('dang-nhap');
         }
 

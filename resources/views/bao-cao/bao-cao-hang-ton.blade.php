@@ -26,7 +26,7 @@
                 </div>
                     <div class="row justify-content-center">
                         <div class="card p-3 me-3 col-5">
-                            @if (Auth::user()->loai_tai_khoan === 'Cán bộ')
+                            @if (Auth::user()->quyen_han === 'Cán bộ')
                                 <h4>Báo cáo hàng tồn theo Doanh nghiệp</h4>
                                 <div class="form-group">
                                     <label class="label-text mb-2" for="ma_doanh_nghiep">Tên Doanh nghiệp/Công ty</label>
