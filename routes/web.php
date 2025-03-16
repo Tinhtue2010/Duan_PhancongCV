@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TaiKhoanController;
+use App\Http\Controllers\DieuChuyenController;
 use App\Http\Controllers\CanBoController;
 use App\Http\Controllers\BaoCaoController;
 use App\Http\Controllers\BoPhanController;
@@ -34,6 +35,12 @@ Route::middleware([\App\Http\Middleware\CheckRoleCanBo::class])->group(function 
         Route::post('/them-bo-phan', [BoPhanController::class, 'themBoPhan'])->name('them-bo-phan');
         Route::post('/update-bo-phan', [BoPhanController::class, 'updateBoPhan'])->name('update-bo-phan');
         Route::post('/xoa-bo-phan', [BoPhanController::class, 'xoaBoPhan'])->name('xoa-bo-phan');
+    });
+    Route::name('dieu-chuyen.')->group(function () {
+        Route::get('/quan-ly-dieu-chuyen', [DieuChuyenController::class, 'danhSachDieuChuyen'])->name('danh-sach-dieu-chuyen');
+        Route::post('/them-dieu-chuyen', [DieuChuyenController::class, 'themDieuChuyen'])->name('them-dieu-chuyen');
+        Route::post('/update-dieu-chuyen', [DieuChuyenController::class, 'updateDieuChuyen'])->name('update-dieu-chuyen');
+        Route::post('/xoa-dieu-chuyen', [DieuChuyenController::class, 'xoaDieuChuyen'])->name('xoa-dieu-chuyen');
     });
 });
 

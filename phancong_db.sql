@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Mar 16, 2025 at 10:41 AM
+-- Generation Time: Mar 16, 2025 at 12:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,17 +33,10 @@ CREATE TABLE `bo_phan` (
   `chuc_nang_nhiem_vu` varchar(255) DEFAULT NULL,
   `thoi_gian_thanh_lap` date DEFAULT NULL,
   `thoi_gian_giai_the` date DEFAULT NULL,
-  `trang_thai` varchar(50) NOT NULL
+  `trang_thai` varchar(50) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `bo_phan`
---
-
-INSERT INTO `bo_phan` (`ma_bo_phan`, `ten_bo_phan`, `chuc_nang_nhiem_vu`, `thoi_gian_thanh_lap`, `thoi_gian_giai_the`, `trang_thai`) VALUES
-('BP01', '123', '123', '0000-00-00', '0000-00-00', '1'),
-('BP02', '123', '123', '2025-03-11', '0000-00-00', '1'),
-('BP03', '12', '12', '2025-03-11', '0000-00-00', '1');
 
 --
 -- Triggers `bo_phan`
@@ -78,16 +71,10 @@ CREATE TABLE `can_bo` (
   `chuc_danh` varchar(50) DEFAULT NULL,
   `trang_thai` tinyint(4) NOT NULL,
   `ma_tai_khoan` int(11) NOT NULL,
-  `nhom_vi_tri_lam_viec` varchar(200) NOT NULL
+  `nhom_vi_tri_lam_viec` varchar(200) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `can_bo`
---
-
-INSERT INTO `can_bo` (`ma_can_bo`, `ma_bo_phan`, `ten_can_bo`, `chuc_danh`, `trang_thai`, `ma_tai_khoan`, `nhom_vi_tri_lam_viec`) VALUES
-('HQ001', 'BP01', 'Trần Đạt a', '5', 0, 2, '123'),
-('HQ002', 'BP01', 'Trần Đạt', '5', 1, 8, '123');
 
 --
 -- Triggers `can_bo`
@@ -121,7 +108,9 @@ CREATE TABLE `cong_viec` (
   `ma_bo_phan` varchar(50) NOT NULL,
   `loai_cong_viec` varchar(50) NOT NULL,
   `ma_thoi_han` int(11) NOT NULL,
-  `trang_thai` int(11) NOT NULL
+  `trang_thai` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -136,7 +125,9 @@ CREATE TABLE `dieu_chuyen` (
   `thoi_gian_dieu_chuyen` varchar(50) DEFAULT NULL,
   `ma_bo_phan_chuyen_den` varchar(50) DEFAULT NULL,
   `chuc_danh_moi` varchar(50) DEFAULT NULL,
-  `ly_do` varchar(255) DEFAULT NULL
+  `ly_do` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -153,7 +144,9 @@ CREATE TABLE `nghi_phep` (
   `den_gio` varchar(50) DEFAULT NULL,
   `ngay_bat_dau` date NOT NULL,
   `ngay_ket_thuc` date NOT NULL,
-  `ly_do_vang` varchar(255) DEFAULT NULL
+  `ly_do_vang` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -169,7 +162,9 @@ CREATE TABLE `phan_cong` (
   `ma_can_bo_nhan` varchar(50) NOT NULL,
   `ngay_phan_cong` date DEFAULT NULL,
   `ngay_nhan_viec` date DEFAULT NULL,
-  `chi_tiet` varchar(255) DEFAULT NULL
+  `chi_tiet` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -182,17 +177,17 @@ CREATE TABLE `tai_khoan` (
   `ma_tai_khoan` int(11) NOT NULL,
   `ten_dang_nhap` varchar(50) NOT NULL,
   `mat_khau` varchar(255) NOT NULL,
-  `quyen_han` varchar(50) NOT NULL
+  `quyen_han` varchar(50) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tai_khoan`
 --
 
-INSERT INTO `tai_khoan` (`ma_tai_khoan`, `ten_dang_nhap`, `mat_khau`, `quyen_han`) VALUES
-(1, 'admin', '$2y$12$EUy8w7SYfGF0gTaKFgzcLuHkZr1LkTPE4TdLmO8Vw.gPvctXcNfea', 'Admin'),
-(2, 'dat123', '$2y$12$ccQ33n5.BqoYc3MqJg.wBe9Rf3yWjvmI01RcDDNpKw2l920m7O9d6', 'CBQL2'),
-(8, 'dat1234', '$2y$12$6Oioew82nUS.t9tTWMeJe.qzR.TMDGNVB5JUt0pvVSXOEHs1uJ0Ee', 'CBQL2');
+INSERT INTO `tai_khoan` (`ma_tai_khoan`, `ten_dang_nhap`, `mat_khau`, `quyen_han`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '$2y$12$EUy8w7SYfGF0gTaKFgzcLuHkZr1LkTPE4TdLmO8Vw.gPvctXcNfea', 'Admin', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -206,7 +201,9 @@ CREATE TABLE `thoi_han_hoan_thanh` (
   `moc_thoi_gian` varchar(255) DEFAULT NULL,
   `ngay_het_han` varchar(50) DEFAULT NULL,
   `thang_het_han` varchar(50) DEFAULT NULL,
-  `noi_nhan` varchar(50) DEFAULT NULL
+  `noi_nhan` varchar(50) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -263,7 +260,7 @@ ALTER TABLE `thoi_han_hoan_thanh`
 -- AUTO_INCREMENT for table `dieu_chuyen`
 --
 ALTER TABLE `dieu_chuyen`
-  MODIFY `ma_dieu_chuyen` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ma_dieu_chuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `nghi_phep`

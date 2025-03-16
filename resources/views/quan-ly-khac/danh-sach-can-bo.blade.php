@@ -134,8 +134,7 @@
                                         </label>
                                         <input type="text" class="form-control" id="modalNhomViTriLamViec"
                                             name="nhom_vi_tri_lam_viec" max="255" placeholder="Nhập vị trí làm việc"
-                                            value="{{ $canBo->nhom_vi_tri_lam_viec }}"
-                                            required>
+                                            value="{{ $canBo->nhom_vi_tri_lam_viec }}" required>
                                     </div>
                                     <div class="col-6">
                                         <label class="mt-1" for="bo_phan"><strong>Bộ phận</strong></label>
@@ -144,6 +143,10 @@
                                             @foreach ($boPhans as $boPhan)
                                                 @if ($boPhan->ma_bo_phan == $canBo->ma_bo_phan)
                                                     <option value="{{ $boPhan->ma_bo_phan }}" selected>
+                                                        {{ $boPhan->ten_bo_phan }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $boPhan->ma_bo_phan }}">
                                                         {{ $boPhan->ten_bo_phan }}
                                                     </option>
                                                 @endif

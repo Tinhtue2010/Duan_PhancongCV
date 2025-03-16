@@ -14,7 +14,6 @@ class TaiKhoan extends Authenticatable
     protected $connection = 'mysql';
     protected $table = 'tai_khoan';
     protected $primaryKey = 'ma_tai_khoan';
-    public $timestamps = false;
 
     protected $fillable = [
         'ten_dang_nhap',

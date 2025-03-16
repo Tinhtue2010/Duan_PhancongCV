@@ -4,7 +4,6 @@ $(document).ready(function () {
     });
 
     $('#trang-thai-dropdown-search').select2();
-    $('#bo-phan-dropdown-search').select2();
 
     $('#thongTinModal ').on('shown.bs.modal', function () {
         $('#trang-thai-dropdown-search').select2('destroy');
@@ -18,6 +17,50 @@ $(document).ready(function () {
             dropdownParent: $('#thongTinModal .modal-body'),
         });
 
+    });
+
+
+
+    $('#can-bo-dropdown-search').select2();
+    $('#themModal').on('shown.bs.modal', function () {
+        $('#can-bo-dropdown-search').select2('destroy');
+        $('#can-bo-dropdown-search').select2({
+            placeholder: "Chọn cán bộ",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $('#themModal .modal-body'),
+        });
+    });
+    $('#thongTinModal').on('shown.bs.modal', function () {
+        $('#can-bo-dropdown-search').select2('destroy');
+        $('#can-bo-dropdown-search').select2({
+            placeholder: "Chọn cán bộ",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $('#thongTinModal .modal-body'),
+        });
+    });
+
+    $('#bo-phan-dropdown-search').select2();
+    $('#themModal').on('shown.bs.modal', function () {
+        $('#bo-phan-dropdown-search').select2('destroy');
+        $('#bo-phan-dropdown-search').select2({
+            placeholder: "Chọn bộ phận",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $('#themModal .modal-body'),
+        });
+    });
+    $('#thongTinModal').on('shown.bs.modal', function () {
         $('#bo-phan-dropdown-search').select2('destroy');
         $('#bo-phan-dropdown-search').select2({
             placeholder: "Chọn bộ phận",
@@ -28,20 +71,10 @@ $(document).ready(function () {
             width: '100%',
             dropdownParent: $('#thongTinModal .modal-body'),
         });
-
-
     });
 
     $('.select2-search__field').attr('placeholder', 'Tìm kiếm...');
 });
-
-$(document).ready(function () {
-    $('#can-bo-dropdown-search').select2({
-        placeholder: "Chọn công chức",
-        allowClear: true,
-    });
-});
-
 
 document.addEventListener("DOMContentLoaded", function () {
     // Select all forms on the page

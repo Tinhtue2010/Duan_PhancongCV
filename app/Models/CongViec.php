@@ -9,7 +9,6 @@ class CongViec extends Model
     protected $connection = 'mysql';
     protected $table = 'cong_viec';
     protected $primaryKey = 'ma_cong_viec';
-    public $timestamps = false;
 
     protected $fillable = [
         'ma_cong_viec',
