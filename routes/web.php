@@ -3,6 +3,7 @@
 use App\Http\Controllers\TaiKhoanController;
 use App\Http\Controllers\CanBoController;
 use App\Http\Controllers\BaoCaoController;
+use App\Http\Controllers\DemoController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home-page');
