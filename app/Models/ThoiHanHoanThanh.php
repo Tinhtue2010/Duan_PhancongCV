@@ -16,7 +16,6 @@ class ThoiHanHoanThanh extends Model
         'moc_thoi_gian',
         'ngay_het_han',
         'thang_het_han',
-        'noi_nhan',
     ];
     public function congViec()
     {

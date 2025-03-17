@@ -15,13 +15,10 @@ class CongViec extends Model
         'ten_cong_viec',
         'ma_bo_phan',
         'loai_cong_viec',
-        'thoi_han_hoan_thanh',
         'trang_thai',
+        'noi_nhan',
     ];
-    // public function taiKhoan()
-    // {
-    //     return $this->hasMany(PhanQuyenBaoCao::class, 'ma_can_bo', 'ma_can_bo');
-    // }
+
     public function boPhan()
     {
         return $this->belongsTo(BoPhan::class, 'ma_bo_phan', 'ma_bo_phan');

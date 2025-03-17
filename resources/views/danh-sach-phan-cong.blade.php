@@ -28,7 +28,7 @@
                             <h4 class="font-weight-bold text-primary">Danh sách phân công</h4>
                         </div>
                         <div class="col-3">
-                            @if (Auth::user()->quyen_han === 'CBQL2' || Auth::user()->quyen_han === 'Admin')
+                            @if (Auth::user()->quyen_han === 'CBQL1' || Auth::user()->quyen_han === 'CBQL2')
                                 <button data-bs-toggle="modal" data-bs-target="#themModal"
                                     class="btn btn-success float-end">Thêm phân công mới</button>
                             @endif
@@ -72,12 +72,14 @@
                                         data-ngay-phan-cong="{{ $phanCong->ngay_phan_cong }}"
                                         data-ngay-nhan-viec="{{ $phanCong->ngay_nhan_viec }}"
                                         data-chi-tiet="{{ $phanCong->chi_tiet }}">
+
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $phanCong->ma_phan_cong }}</td>
                                         <td>{{ $phanCong->ten_cong_viec }}</td>
                                         <td>{{ $phanCong->ten_can_bo_giao }}</td>
                                         <td>{{ $phanCong->ten_can_bo_nhan }}</td>
                                         <td>{{ \Carbon\Carbon::parse($phanCong->ngay_phan_cong)->format('d-m-Y') }}</td>
+
                                         @if (Auth::user()->quyen_han === 'CBQL1' || Auth::user()->quyen_han === 'CBQL2')
                                             <td>
                                                 <button class="btn btn-danger" data-bs-toggle="modal"
@@ -110,57 +112,54 @@
                     @method('POST')
                     <div class="modal-body">
                         <div class="row">
-                            <p class="mt-2"><strong>Cán bộ giao:</strong> <span id="modalCanBoGiao"></span></p>
-                            <p class="mt-2"><strong>Cán bộ nhận:</strong> <span id="modalCanBoNhan"></span></p>
-                            <p class="mt-2"><strong>Ngày phân công:</strong> <span id="modalNgayPhanCong"></span></p>
-                            <input type="hidden" class="form-control" id="modalMaPhanCongInput" name="ma_phan_cong">
+                            <div class="col-12">
 
-                            <label class="mt-1" for="loai_cong_viec"><strong>Loại công việc</strong></label>
-                            <select class="form-control" id="loai-cong-viec-dropdown-search-2" name="loai_cong_viec">
-                                <option value=''></option>
-                                <option value='Nghiệp vụ'>Nghiệp vụ</option>
-                                <option value='Báo cáo'>Báo cáo</option>
-                                <option value='Văn bản'>Văn bản</option>
-                            </select>
+                                <p class="mt-2"><strong>Cán bộ giao:</strong> <span id="modalCanBoGiao"></span></p>
+                                <p class="mt-2"><strong>Cán bộ nhận:</strong> <span id="modalCanBoNhan"></span></p>
+                                <p class="mt-2"><strong>Ngày phân công:</strong> <span id="modalNgayPhanCong"></span></p>
+                                <input type="hidden" class="form-control" id="modalMaPhanCongInput" name="ma_phan_cong">
 
-                            <label class="mt-1" for="ma_cong_viec"><strong>Công việc</strong></label>
-                            <select class="form-control" id="cong-viec-dropdown-search-2" name="ma_cong_viec">
-                                <option value=''></option>
-                                @foreach ($congViecs as $congViec)
-                                    @if ($congViec->ma_cong_viec == $phanCong->ma_cong_viec)
-                                        <option value="{{ $congViec->ma_cong_viec }}" selected>
-                                            {{ $congViec->ten_cong_viec }}
-                                        </option>
-                                    @else
-                                        <option value="{{ $congViec->ma_bo_phan }}">
-                                            {{ $congViec->ten_cong_viec }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                            <div class="row">
-                                <div class="col-12">
-                                    <label class="mt-1" for="ngay_nhan_viec"><strong>Ngày nhận việc</strong></label>
-                                    <input type="text" id="modalNgayNhanViec" class="form-control px-2"
-                                        placeholder="dd/mm/yyyy" name="ngay_nhan_viec" autocomplete="off">
-    
-                                    <label class="mt-3" for="chuc_danh"><strong>Chi tiết phân công</strong></label>
-                                    <textarea class="form-control" id="modalChiTiet" rows="3" name="chi_tiet"></textarea>
-                                </div>
+                                <label class="mt-1" for="loai_cong_viec"><strong>Loại công việc</strong></label>
+                                <select class="form-control" id="loai-cong-viec-dropdown-search-2" name="loai_cong_viec">
+                                    <option value=''></option>
+                                    <option value='Nghiệp vụ'>Nghiệp vụ</option>
+                                    <option value='Báo cáo'>Báo cáo</option>
+                                    <option value='Văn bản'>Văn bản</option>
+                                </select>
 
-                            </div>
+                                <label class="mt-1" for="ma_cong_viec"><strong>Công việc</strong></label>
+                                <select class="form-control" id="cong-viec-dropdown-search-2" name="ma_cong_viec">
+                                    <option value=''></option>
+                                    @foreach ($congViecs as $congViec)
+                                        @if ($congViec->ma_cong_viec == $phanCong->ma_cong_viec)
+                                            <option value="{{ $congViec->ma_cong_viec }}" selected>
+                                                {{ $congViec->ten_cong_viec }}
+                                            </option>
+                                        @else
+                                            <option value="{{ $congViec->ma_bo_phan }}">
+                                                {{ $congViec->ten_cong_viec }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <label class="mt-1" for="ngay_nhan_viec"><strong>Ngày nhận việc</strong></label>
+                                <input type="text" id="modalNgayNhanViec" class="form-control px-2"
+                                    placeholder="dd/mm/yyyy" name="ngay_nhan_viec" autocomplete="off">
 
+                                <label class="mt-3" for="chuc_danh"><strong>Chi tiết phân công</strong></label>
+                                <textarea class="form-control" id="modalChiTiet" rows="3" name="chi_tiet"></textarea>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        @if (Auth::user()->quyen_han === 'CBQL2')
-                            <button type="submit" class="btn btn-success">Cập nhật</button>
-                        @endif
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    </div>
-                </form>
             </div>
+            <div class="modal-footer">
+                @if (Auth::user()->quyen_han === 'CBQL2')
+                    <button type="submit" class="btn btn-success">Cập nhật</button>
+                @endif
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+            </form>
         </div>
+    </div>
     </div>
     <!-- Modal Thêm -->
     <div class="modal fade" id="themModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -195,7 +194,27 @@
 
                         </div>
 
+                        <label class="mt-1" for="chuc_danh"><strong>Bộ phận</strong></label>
 
+                        @if (Auth::user()->quyen_han == 'CBQL1')
+                            <select class="form-control" id="bo-phan-dropdown-search" name="ma_bo_phan" disabled>
+                            @else
+                                <select class="form-control" id="bo-phan-dropdown-search" name="ma_bo_phan">
+                        @endif
+
+                        <option value=''></option>
+                        @foreach ($boPhans as $boPhan)
+                            @if (isset(Auth::user()->canBo->ma_bo_phan) && Auth::user()->canBo->ma_bo_phan == $boPhan->ma_bo_phan)
+                                <option value="{{ $boPhan->ma_bo_phan }}" selected>
+                                    {{ $boPhan->ten_bo_phan }}
+                                </option>
+                            @else
+                                <option value="{{ $boPhan->ma_bo_phan }}">
+                                    {{ $boPhan->ten_bo_phan }}
+                                </option>
+                            @endif
+                        @endforeach
+                        </select>
                         <label class="mt-1" for="chuc_danh"><strong>Cán bộ nhận</strong></label>
                         <select class="form-control" id="can-bo-dropdown-search" name="ma_can_bo_nhan">
                             <option value=''></option>
@@ -318,7 +337,8 @@
                 const modalTenCongChucBC = document.getElementById('modalTenCongChucBC');
                 const modalMaCongChucBC = document.getElementById('modalMaCongChucBC');
                 const modalInputMaCongChucBC = document.getElementById('modalInputMaCongChucBC');
-
+                const maBoPhan = document.getElementById('bo-phan-dropdown-search').value;
+                loadCanBoDropdown(maBoPhan);
 
                 deleteButtons.forEach(button => {
                     button.addEventListener('click', function() {
@@ -352,6 +372,31 @@
                         }
                     });
                 });
+
+                function loadCanBoDropdown(boPhan) {
+                    let canBoDropdown = $("#can-bo-dropdown-search");
+                    canBoDropdown.empty();
+                    $.ajax({
+                        url: "{{ route('phan-cong.get-can-bo') }}", // Adjust with your route
+                        type: "GET",
+                        data: {
+                            ma_bo_phan: boPhan,
+                        },
+                        success: function(response) {
+                            $.each(response.canBos, function(index, canBo) {
+                                canBoDropdown.append(
+                                    `<option value="${canBo.ma_can_bo}">${canBo.ten_can_bo}</option>`
+                                );
+                            });
+                        }
+                    });
+                }
+
+                $(document).on('change', '#bo-phan-dropdown-search', function() {
+                    let boPhan = $(this).val();
+                    loadCanBoDropdown(boPhan);
+                });
+
             });
         </script>
         <script>

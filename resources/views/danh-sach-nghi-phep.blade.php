@@ -64,9 +64,11 @@
                                 <th>
                                     Lý do vắng
                                 </th>
-                                <th>
-                                    Thao tác
-                                </th>
+                                @if (Auth::user()->quyen_han === 'CBQL1' || Auth::user()->quyen_han === 'CBQL2')
+                                    <th>
+                                        Thao tác
+                                    </th>
+                                @endif
                             </thead>
                             <tbody class="clickable-row">
                                 @foreach ($data as $index => $item)
@@ -76,24 +78,26 @@
                                         data-ngay-bat-dau="{{ $item->ngay_bat_dau }}"
                                         data-ngay-ket-thuc="{{ $item->ngay_ket_thuc }}"
                                         data-ly-do-vang="{{ $item->ly_do_vang ?? '' }}"
-                                        data-ma-nghi-phep="{{ $item->ma_nghi_phep }}" >
+                                        data-ma-nghi-phep="{{ $item->ma_nghi_phep }}">
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $item->ma_can_bo }}</td>
                                         <td>{{ $item->canBo->ten_can_bo ?? 'N/A' }}</td>
-                                        <!-- Giả sử có quan hệ với bảng cán bộ -->
-                                        <td>{{ $item->ngay_lam_viec ?? 'N/A' }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->ngay_lam_viec)->format('d-m-Y') }}</td>
                                         <td>{{ $item->tu_gio ?? 'N/A' }}</td>
                                         <td>{{ $item->den_gio ?? 'N/A' }}</td>
-                                        <td>{{ $item->ngay_bat_dau }}</td>
-                                        <td>{{ $item->ngay_ket_thuc }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->ngay_bat_dau)->format('d-m-Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->ngay_ket_thuc)->format('d-m-Y') }}</td>
                                         <td>{{ $item->ly_do_vang ?? 'Không có' }}</td>
-                                        <td>
-                                            <button class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#xoaModal" data-ma-can-bo="{{ $item->ma_can_bo }}" data-ma-nghi-phep="{{ $item->ma_nghi_phep }}" 
-                                                data-ten-can-bo="{{ $item->ten_can_bo }}">
-                                                Xóa
-                                            </button>
-                                        </td>
+                                        @if (Auth::user()->quyen_han === 'CBQL1' || Auth::user()->quyen_han === 'CBQL2')
+                                            <td>
+                                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#xoaModal" data-ma-can-bo="{{ $item->ma_can_bo }}"
+                                                    data-ma-nghi-phep="{{ $item->ma_nghi_phep }}"
+                                                    data-ten-can-bo="{{ $item->ten_can_bo }}">
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -109,22 +113,24 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="thongTinModalLabel">Thông tin cán bộ</h5>
+                    <h5 class="modal-title" id="thongTinModalLabel">Thông tin nghỉ phép</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.update-nghi-phep') }}" method="POST">
+                <form action="{{ route('nghi-phep.update-nghi-phep') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
-                                @include('quan-ly-khac.nghi-phep.field')
+                                @include('nghi-phep.field')
                                 <input type="hidden" name="ma_nghi_phep" id="modalInputMaCongChucXoa">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                        @if (Auth::user()->quyen_han === 'CBQL1' || Auth::user()->quyen_han === 'CBQL2')
+                            <button type="submit" class="btn btn-success">Cập nhật</button>
+                        @endif
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </form>
@@ -136,16 +142,16 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thêm cán bộ mới</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm nghỉ phép mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.them-nghi-phep') }}" method="POST">
+                <form action="{{ route('nghi-phep.them-nghi-phep') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
-                                @include('quan-ly-khac.nghi-phep.field')
+                                @include('nghi-phep.field')
                             </div>
                         </div>
                     </div>
@@ -164,14 +170,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Xác nhận xóa cán bộ</h4>
+                    <h4 class="modal-title">Xác nhận xóa nghỉ phép</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.xoa-nghi-phep') }}" method="POST">
+                <form action="{{ route('nghi-phep.xoa-nghi-phep') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
-                        <h6 class="text-danger">Xác nhận xóa cán bộ này?</h6>
+                        <h6 class="text-danger">Xác nhận xóa nghỉ phép này?</h6>
                         <div>
                             <label><strong>Mã cán bộ:</strong></label>
                             <p class="d-inline" id="modalMaCongChucXoa"></p>
@@ -259,7 +265,7 @@
                     const maCongChuc = this.getAttribute('data-ma-can-bo');
                     const tenCongChuc = this.getAttribute('data-ten-can-bo');
                     const maNghiPhep = this.getAttribute('data-ma-nghi-phep');
-                    
+
 
                     // Set data in the modal
                     modalTenCongChuc.textContent = tenCongChuc;

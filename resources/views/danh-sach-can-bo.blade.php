@@ -79,14 +79,13 @@
                                         <td>{{ $canBo->boPhan->ten_bo_phan ?? '' }}</td>
                                         <td>{{ $canBo->ten_dang_nhap }}</td>
                                         <td>{{ $canBo->quyen_han }}</td>
-                                        <td>
-                                            @if ($canBo->trang_thai == 1)
-                                                Đang công tác
-                                            @elseif($canBo->trang_thai == 0)
-                                                Nghỉ công tác
-                                            @endif
 
-                                        </td>
+                                        @if ($canBo->trang_thai == 1)
+                                            <td class="text-success">Đang công tác</td>
+                                        @elseif($canBo->trang_thai == 0)
+                                            <td class="text-danger">Nghỉ công tác</td>
+                                        @endif
+                                        
                                         @if (Auth::user()->quyen_han === 'CBQL2' || Auth::user()->quyen_han === 'Admin')
                                             <td>
                                                 <button class="btn btn-danger" data-bs-toggle="modal"

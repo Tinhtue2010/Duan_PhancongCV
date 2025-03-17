@@ -5,10 +5,22 @@ $(document).ready(function () {
 
     $('#cong-viec-dropdown-search').select2();
     $('#cong-viec-dropdown-search-2').select2();
-    $('#loai-cong-viec-dropdown-search').select2();
+    $('#loai-cong-viec-dropdown-search').select2({
+        placeholder: "Chọn loại công việc",
+        allowClear: true,
+        language: "vi",
+        minimumInputLength: 0,
+        width: '100%',
+    });
     $('#loai-cong-viec-dropdown-search-2').select2();
     $('#trang-thai-dropdown-search').select2();
-    $('#bo-phan-dropdown-search').select2();
+    $('#bo-phan-dropdown-search').select2({
+        placeholder: "Chọn bộ phận",
+        allowClear: true,
+        language: "vi",
+        minimumInputLength: 0,
+        width: '100%',
+    });
     $('#can-bo-dropdown-search').select2();
 
     $('#themModal').on('shown.bs.modal', function () {
@@ -58,7 +70,6 @@ $(document).ready(function () {
             allowClear: true,
             language: "vi",
             minimumInputLength: 0,
-
             width: '100%',
             dropdownParent: $('#themModal'),
         });
@@ -149,27 +160,21 @@ $(document).ready(function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Select all forms on the page
     const forms = document.querySelectorAll("form");
 
     forms.forEach((form) => {
         form.addEventListener("submit", function (event) {
-            // Find the submit button within the form
             const submitButton = form.querySelector('button[type="submit"]');
-
             if (submitButton) {
-                // Save the original button text
                 const originalText = submitButton.textContent;
 
-                // Disable the button to prevent multiple submissions
                 submitButton.disabled = true;
-                submitButton.textContent = "Đang xử lý..."; // Feedback for users
+                submitButton.textContent = "Đang xử lý...";
 
-                // Re-enable the button and restore its text after 3 seconds
                 setTimeout(() => {
                     submitButton.disabled = false;
-                    submitButton.textContent = originalText; // Restore the original text
-                }, 3000); // 3000ms = 3 seconds
+                    submitButton.textContent = originalText;
+                }, 3000);
             }
         });
     });
@@ -179,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 setTimeout(() => {
     const alertElement = document.getElementById('myAlert');
-    if (alertElement) { // Ensure the element exists before attempting to remove it
+    if (alertElement) {
         alertElement.remove();
     }
 }, 5000);

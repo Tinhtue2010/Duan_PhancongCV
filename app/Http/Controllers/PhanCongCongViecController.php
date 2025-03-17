@@ -8,6 +8,7 @@ use App\Models\CongViec;
 use App\Models\PhanCong;
 use App\Models\PhanQuyenBaoCao;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -15,6 +16,7 @@ class PhanCongCongViecController extends Controller
 {
     public function danhSachPhanCong()
     {
+        $canBo = CanBo::where('ma_tai_khoan',Auth::user()->ma_tai_khoan)->first();
         $data = PhanCong::join('cong_viec', 'cong_viec.ma_cong_viec', '=', 'phan_cong.ma_cong_viec')
             ->join('can_bo as giao', 'giao.ma_can_bo', '=', 'phan_cong.ma_can_bo_giao')
             ->join('can_bo as nhan', 'nhan.ma_can_bo', '=', 'phan_cong.ma_can_bo_nhan')
@@ -26,10 +28,17 @@ class PhanCongCongViecController extends Controller
                 'nhan.ten_can_bo as ten_can_bo_nhan' 
             )
             ->get();
-        $canBos = CanBo::where('trang_thai', 1)->get();
+        $boPhans = BoPhan::all();
+        if(Auth::user()->quyen_han === 'CBQL2'){
+            $canBos = CanBo::where('trang_thai', 1)->where('ma_bo_phan',$canBo->ma_bo_phan)->get();
+        } else {
+            $canBos = [];
+        }
+
+
         $congViecs = CongViec::where('trang_thai', 1)->get();
 
-        return view('danh-sach-phan-cong', data: compact('data', 'canBos', 'congViecs'));
+        return view('danh-sach-phan-cong', data: compact('data', 'canBos', 'congViecs','boPhans'));
     }
 
     public function themPhanCong(Request $request)
@@ -78,6 +87,14 @@ class PhanCongCongViecController extends Controller
 
         return response()->json([
             'congViecs' => $congViecs
+        ]);
+    }
+    public function getCanBo(Request $request)
+    {
+        $canBos = CanBo::where('ma_bo_phan', $request->ma_bo_phan)->get();
+
+        return response()->json([
+            'canBos' => $canBos
         ]);
     }
 }

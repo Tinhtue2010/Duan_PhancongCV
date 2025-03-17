@@ -54,11 +54,9 @@
                                 <th>
                                     Trạng thái
                                 </th>
-                                @if (Auth::user()->quyen_han === 'CBQL2')
-                                    <th>
-                                        Thao tác
-                                    </th>
-                                @endif
+                                <th>
+                                    Thao tác
+                                </th>
                             </thead>
                             <tbody class="clickable-row">
                                 @foreach ($data as $index => $boPhan)
@@ -72,19 +70,18 @@
                                         <td>{{ $boPhan->ma_bo_phan }}</td>
                                         <td>{{ $boPhan->ten_bo_phan }}</td>
                                         <td>{{ $boPhan->chuc_nang_nhiem_vu }}</td>
-                                        <td>
-                                            @if ($boPhan->trang_thai == 1)
-                                                Đang hoạt động
-                                            @elseif($boPhan->trang_thai == 0)
-                                                Ngừng hoạt động
-                                            @endif
+                                        @if ($boPhan->trang_thai == 1)
+                                            <td class="text-success">Đang hoạt động</td>
+                                        @elseif($boPhan->trang_thai == 0)
+                                            <td class="text-danger">Ngừng hoạt động</td>
+                                        @endif
 
-                                        </td>
                                         <td>
-                                            <button class="btn btn-primary" onclick="window.location.href='{{ route('bo-phan.can-bo-cua-bo-phan', ['ma_bo_phan' => $boPhan->ma_bo_phan]) }}'">
+                                            <button class="btn btn-primary"
+                                                onclick="window.location.href='{{ route('bo-phan.can-bo-cua-bo-phan', ['ma_bo_phan' => $boPhan->ma_bo_phan]) }}'">
                                                 Cán bộ
                                             </button>
-                                            
+
                                             @if (Auth::user()->quyen_han === 'CBQL2')
                                                 <button class="btn btn-danger" data-bs-toggle="modal"
                                                     data-bs-target="#xoaModal" data-ma-bo-phan="{{ $boPhan->ma_bo_phan }}"

@@ -5,12 +5,10 @@ use App\Http\Controllers\DieuChuyenController;
 use App\Http\Controllers\CanBoController;
 use App\Http\Controllers\BaoCaoController;
 use App\Http\Controllers\BoPhanController;
+use App\Http\Controllers\CongViecController;
 use App\Http\Controllers\DemoController;
-<<<<<<< HEAD
 use App\Http\Controllers\PhanCongCongViecController;
-=======
 use App\Http\Controllers\NghiPhepController;
->>>>>>> eb4f206843fd609a8f26dcff56bfb440ebf7b225
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home-page');
@@ -29,12 +27,6 @@ Route::middleware([\App\Http\Middleware\CheckRoleAdmin::class])->group(function 
         Route::post('/them-can-bo', [CanBoController::class, 'themCanBo'])->name('them-can-bo');
         Route::post('/update-can-bo', [CanBoController::class, 'updateCanBo'])->name('update-can-bo');
         Route::post('/xoa-can-bo', [CanBoController::class, 'xoaCanBo'])->name('xoa-can-bo');
-
-
-        Route::get('/quan-ly-nghi-phep', [NghiPhepController::class, 'index'])->name('quan-ly-nghi-phep');
-        Route::post('/them-nghi-phep', [NghiPhepController::class, 'create'])->name('them-nghi-phep');
-        Route::post('/update-nghi-phep', [NghiPhepController::class, 'update'])->name('update-nghi-phep');
-        Route::post('/xoa-nghi-phep', [NghiPhepController::class, 'delete'])->name('xoa-nghi-phep');
     });
 });
 
@@ -58,8 +50,27 @@ Route::middleware([\App\Http\Middleware\CheckRoleCanBo::class])->group(function 
         Route::post('/update-phan-cong', [PhanCongCongViecController::class, 'updatePhanCong'])->name('update-phan-cong');
         Route::post('/xoa-phan-cong', [PhanCongCongViecController::class, 'xoaPhanCong'])->name('xoa-phan-cong');
         Route::get('/get-cong-viec', [PhanCongCongViecController::class, 'getCongViec'])->name('get-cong-viec');
+        Route::get('/get-can-bo', [PhanCongCongViecController::class, 'getCanBo'])->name('get-can-bo');
+    });
+    Route::name('cong-viec.')->group(function () {
+        Route::get('/quan-ly-cong-viec', [CongViecController::class, 'danhSachCongViec'])->name('danh-sach-cong-viec');
+        Route::get('/them-cong-viec', [CongViecController::class, 'themCongViec'])->name('them-cong-viec');
+        Route::post('/them-cong-viec-submit', [CongViecController::class, 'themCongViecSubmit'])->name('them-cong-viec-submit');
+
+        Route::get('/sua-cong-viec/{ma_cong_viec}', [CongViecController::class, 'suaCongViec'])->name('sua-cong-viec');
+        Route::post('/sua-cong-viec-submit', [CongViecController::class, 'suaCongViecSubmit'])->name('sua-cong-viec-submit');
+
+        Route::post('/xoa-cong-viec', [CongViecController::class, 'xoaCongViec'])->name('xoa-cong-viec');
+        Route::post('/kich-hoat-cong-viec', [CongViecController::class, 'kichHoatCongViec'])->name('kich-hoat-cong-viec');
+    });
+    Route::name('nghi-phep.')->group(function () {
+        Route::get('/quan-ly-nghi-phep', [NghiPhepController::class, 'danhSachNghiPhep'])->name('quan-ly-nghi-phep');
+        Route::post('/them-nghi-phep', [NghiPhepController::class, 'themNghiPhep'])->name('them-nghi-phep');
+        Route::post('/update-nghi-phep', [NghiPhepController::class, 'updateNghiPhep'])->name('update-nghi-phep');
+        Route::post('/xoa-nghi-phep', [NghiPhepController::class, 'xoaNghiPhep'])->name('xoa-nghi-phep');
     });
 });
+
 Route::name('can-bo.')->group(function () {
     Route::get('/quan-ly-can-bo', [CanBoController::class, 'danhSachCanBo'])->name('danh-sach-can-bo');
     Route::post('/them-can-bo', [CanBoController::class, 'themCanBo'])->name('them-can-bo');

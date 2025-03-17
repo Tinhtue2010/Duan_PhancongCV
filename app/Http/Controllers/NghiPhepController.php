@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class NghiPhepController extends Controller
 {
-    function index()
+    function danhSachNghiPhep()
     {
         $data = NghiPhep::leftJoin('can_bo','can_bo.ma_can_bo','=','nghi_phep.ma_can_bo')
         ->orderBy('ngay_bat_dau', 'desc')->get();
@@ -22,11 +22,10 @@ class NghiPhepController extends Controller
             ->doesntHave('canBo')
             ->get();
         $boPhans = BoPhan::all();
-// dd($data);
-        return view('quan-ly-khac.danh-sach-nghi-phep', data: compact('data', 'taiKhoans', 'boPhans','danhSachCanBo'));
+        return view('danh-sach-nghi-phep', data: compact('data', 'taiKhoans', 'boPhans','danhSachCanBo'));
     }
 
-    function create(Request $request) {
+    function themNghiPhep(Request $request) {
         $request->validate([
             'ma_can_bo' => 'required|string|max:50',
             'ngay_lam_viec' => 'nullable|date',
@@ -50,7 +49,7 @@ class NghiPhepController extends Controller
         return redirect()->back()->with('success', 'Đã lưu thông tin nghỉ phép!');
     }
 
-    function update(Request $request) {
+    function updateNghiPhep(Request $request) {
         $request->validate([
             'ma_can_bo' => 'required|string|max:50',
             'ngay_lam_viec' => 'nullable|date',
@@ -77,9 +76,9 @@ class NghiPhepController extends Controller
     }
     
 
-    function delete(Request $request) {
+    function xoaNghiPhep(Request $request) {
         NghiPhep::where('ma_nghi_phep', $request->ma_nghi_phep)->delete();
-        session()->flash('alert-success', 'Xóa công chức thành công');
+        session()->flash('alert-success', 'Xóa nghỉ phép thành công');
         return redirect()->back();
     }
 }

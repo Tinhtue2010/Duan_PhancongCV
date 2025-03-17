@@ -94,15 +94,15 @@
                             Hoạt động
                         </a>
                         @if (Auth::user()->quyen_han == 'Admin')
-                        <ul class="dropdown-menu" aria-labelledby="courseDropdown">
-                            <li><a class="dropdown-item" href="/quan-ly-tai-khoan">Quản lý tài khoản</a>
-                            <li><a class="dropdown-item" href="/quan-ly-can-bo">Quản lý cán bộ</a></li>
-                        </ul>
+                            <ul class="dropdown-menu" aria-labelledby="courseDropdown">
+                                <li><a class="dropdown-item" href="/quan-ly-tai-khoan">Quản lý tài khoản</a>
+                                <li><a class="dropdown-item" href="/quan-ly-can-bo">Quản lý cán bộ</a></li>
+                            </ul>
                         @elseif(Auth::user()->quyen_han != 'Admin')
-                        <ul class="dropdown-menu" aria-labelledby="courseDropdown">
-                            <li><a class="dropdown-item" href="/quan-ly-can-bo">Quản lý cán bộ</a></li>
-                            <li><a class="dropdown-item" href="/quan-ly-bo-phan">Quản lý bộ phận</a></li>
-                        </ul>
+                            <ul class="dropdown-menu" aria-labelledby="courseDropdown">
+                                <li><a class="dropdown-item" href="/quan-ly-can-bo">Quản lý cán bộ</a></li>
+                                <li><a class="dropdown-item" href="/quan-ly-bo-phan">Quản lý bộ phận</a></li>
+                            </ul>
                         @endif
                     </li>
 
@@ -152,18 +152,28 @@
                             </a>
                             <a class="nav-link" href="/quan-ly-bo-phan">
                                 <div class="sb-nav-link-icon"><img class="side-bar-icon"
-                                        src="{{ asset('images/icons/officer.png') }}"></div>
+                                        src="{{ asset('images/icons/bo-phan.png') }}"></div>
                                 Danh sách bộ phận
                             </a>
                             <a class="nav-link" href="/quan-ly-dieu-chuyen">
                                 <div class="sb-nav-link-icon"><img class="side-bar-icon"
-                                        src="{{ asset('images/icons/officer.png') }}"></div>
+                                        src="{{ asset('images/icons/dieu-chuyen.svg') }}"></div>
                                 Danh sách điều chuyển
+                            </a>
+                            <a class="nav-link" href="/quan-ly-cong-viec">
+                                <div class="sb-nav-link-icon"><img class="side-bar-icon"
+                                        src="{{ asset('images/icons/cong-viec.png') }}"></div>
+                                Danh sách công việc
                             </a>
                             <a class="nav-link" href="/quan-ly-phan-cong">
                                 <div class="sb-nav-link-icon"><img class="side-bar-icon"
-                                        src="{{ asset('images/icons/officer.png') }}"></div>
+                                        src="{{ asset('images/icons/task-assign.png') }}"></div>
                                 Danh sách phân công
+                            </a>
+                            <a class="nav-link" href="/quan-ly-nghi-phep">
+                                <div class="sb-nav-link-icon"><img class="side-bar-icon"
+                                        src="{{ asset('images/icons/ask-for-leave.png') }}"></div>
+                                Quản lý nghỉ phép
                             </a>
                         @elseif (Auth::user()->quyen_han === 'Admin')
                             <div class="sb-sidenav-menu-heading">Quản lý thông tin</div>
@@ -176,11 +186,6 @@
                                 <div class="sb-nav-link-icon"><img class="side-bar-icon"
                                         src="{{ asset('images/icons/officer.png') }}"></div>
                                 Danh sách cán bộ
-                            </a>
-                            <a class="nav-link" href="/quan-ly-nghi-phep">
-                                <div class="sb-nav-link-icon"><img class="side-bar-icon"
-                                        src="{{ asset('images/icons/officer.png') }}"></div>
-                                Quản lý nghỉ phép
                             </a>
                         @endif
                         <div class="sb-sidenav-menu-heading">Tài khoản</div>
