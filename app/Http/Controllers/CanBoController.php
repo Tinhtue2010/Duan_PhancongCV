@@ -14,7 +14,7 @@ class CanBoController extends Controller
 {
     public function danhSachCanBo()
     {
-        $data = CanBo::leftJoin('tai_khoan', 'can_bo.ma_tai_khoan', '=', 'tai_khoan.ma_tai_khoan')
+        $data = CanBo::join('tai_khoan', 'can_bo.ma_tai_khoan', '=', 'tai_khoan.ma_tai_khoan')
             ->orderBy('ma_can_bo', 'desc')->get();
 
         $taiKhoans = TaiKhoan::where('quyen_han', 'Cán bộ')
@@ -22,7 +22,7 @@ class CanBoController extends Controller
             ->get();
         $boPhans = BoPhan::all();
 
-        return view('quan-ly-khac.danh-sach-can-bo', data: compact('data', 'taiKhoans', 'boPhans'));
+        return view('danh-sach-can-bo', data: compact('data', 'taiKhoans', 'boPhans'));
     }
 
     public function themCanBo(Request $request)

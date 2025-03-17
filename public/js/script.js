@@ -3,75 +3,147 @@ $(document).ready(function () {
         $('.select2-search__field').attr('placeholder', 'Nhập để tìm kiếm'); // Set the placeholder
     });
 
+    $('#cong-viec-dropdown-search').select2();
+    $('#cong-viec-dropdown-search-2').select2();
+    $('#loai-cong-viec-dropdown-search').select2();
+    $('#loai-cong-viec-dropdown-search-2').select2();
     $('#trang-thai-dropdown-search').select2();
+    $('#bo-phan-dropdown-search').select2();
+    $('#can-bo-dropdown-search').select2();
 
-    $('#thongTinModal ').on('shown.bs.modal', function () {
+    $('#themModal').on('shown.bs.modal', function () {
+        $('#can-bo-dropdown-search').select2('destroy');
+        $('#can-bo-dropdown-search').select2({
+            placeholder: "Chọn cán bộ",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+            width: '100%',
+            dropdownParent: $('#themModal'),
+        });
+
+        $('#bo-phan-dropdown-search').select2('destroy');
+        $('#bo-phan-dropdown-search').select2({
+            placeholder: "Chọn bộ phận",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+
+            width: '100%',
+            dropdownParent: $('#themModal '),
+        });
+        $('#cong-viec-dropdown-search').select2('destroy');
+        $('#cong-viec-dropdown-search').select2({
+            placeholder: "Chọn công việc",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+
+            width: '100%',
+            dropdownParent: $('#themModal '),
+        });
+        $('#cong-viec-dropdown-search-2').select2('destroy');
+        $('#cong-viec-dropdown-search-2').select2({
+            placeholder: "Chọn công việc",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+
+            width: '100%',
+            dropdownParent: $('#themModal'),
+        });
+        $('#loai-cong-viec-dropdown-search').select2('destroy');
+        $('#loai-cong-viec-dropdown-search').select2({
+            placeholder: "Chọn loại công việc",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+
+            width: '100%',
+            dropdownParent: $('#themModal'),
+        });
+
+    });
+
+    $('#loai-cong-viec-dropdown-search-2').select2();
+
+    $('#thongTinModal').on('shown.bs.modal', function () {
         $('#trang-thai-dropdown-search').select2('destroy');
         $('#trang-thai-dropdown-search').select2({
             placeholder: "Chọn trạng thái",
             allowClear: true,
             language: "vi",
             minimumInputLength: 0,
-            dropdownAutoWidth: true,
+
             width: '100%',
-            dropdownParent: $('#thongTinModal .modal-body'),
+            dropdownParent: $('#thongTinModal '),
         });
-
-    });
-
-
-
-    $('#can-bo-dropdown-search').select2();
-    $('#themModal').on('shown.bs.modal', function () {
         $('#can-bo-dropdown-search').select2('destroy');
         $('#can-bo-dropdown-search').select2({
             placeholder: "Chọn cán bộ",
             allowClear: true,
             language: "vi",
             minimumInputLength: 0,
-            dropdownAutoWidth: true,
+
             width: '100%',
-            dropdownParent: $('#themModal .modal-body'),
+            dropdownParent: $('#thongTinModal '),
         });
-    });
-    $('#thongTinModal').on('shown.bs.modal', function () {
-        $('#can-bo-dropdown-search').select2('destroy');
-        $('#can-bo-dropdown-search').select2({
-            placeholder: "Chọn cán bộ",
+
+        $('#bo-phan-dropdown-search').select2('destroy');
+        $('#bo-phan-dropdown-search').select2({
+            placeholder: "Chọn bộ phận",
             allowClear: true,
             language: "vi",
             minimumInputLength: 0,
-            dropdownAutoWidth: true,
+
             width: '100%',
-            dropdownParent: $('#thongTinModal .modal-body'),
+            dropdownParent: $('#thongTinModal '),
+        });
+
+        $('#cong-viec-dropdown-search').select2('destroy');
+        $('#cong-viec-dropdown-search').select2({
+            placeholder: "Chọn công việc",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+
+            width: '100%',
+            dropdownParent: $('#thongTinModal '),
+        });
+
+        $('#cong-viec-dropdown-search-2').select2('destroy');
+        $('#cong-viec-dropdown-search-2').select2({
+            placeholder: "Chọn công việc",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+
+            width: '100%',
+            dropdownParent: $('#thongTinModal'),
+        });
+
+        $('#loai-cong-viec-dropdown-search').select2('destroy');
+        $('#loai-cong-viec-dropdown-search').select2({
+            placeholder: "Chọn loại công việc",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+
+            width: '100%',
+            dropdownParent: $('#thongTinModal'),
+        });
+        $('#loai-cong-viec-dropdown-search-2').select2('destroy');
+        $('#loai-cong-viec-dropdown-search-2').select2({
+            placeholder: "Chọn loại công việc",
+            allowClear: true,
+            language: "vi",
+            minimumInputLength: 0,
+
+            width: '100%',
+            dropdownParent: $('#thongTinModal'),
         });
     });
 
-    $('#bo-phan-dropdown-search').select2();
-    $('#themModal').on('shown.bs.modal', function () {
-        $('#bo-phan-dropdown-search').select2('destroy');
-        $('#bo-phan-dropdown-search').select2({
-            placeholder: "Chọn bộ phận",
-            allowClear: true,
-            language: "vi",
-            minimumInputLength: 0,
-            dropdownAutoWidth: true,
-            width: '100%',
-            dropdownParent: $('#themModal .modal-body'),
-        });
-    });
-    $('#thongTinModal').on('shown.bs.modal', function () {
-        $('#bo-phan-dropdown-search').select2('destroy');
-        $('#bo-phan-dropdown-search').select2({
-            placeholder: "Chọn bộ phận",
-            allowClear: true,
-            language: "vi",
-            minimumInputLength: 0,
-            dropdownAutoWidth: true,
-            width: '100%',
-            dropdownParent: $('#thongTinModal .modal-body'),
-        });
-    });
 
     $('.select2-search__field').attr('placeholder', 'Tìm kiếm...');
 });

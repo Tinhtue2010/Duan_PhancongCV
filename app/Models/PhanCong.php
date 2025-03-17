@@ -18,6 +18,7 @@ class PhanCong extends Model
         'ngay_phan_cong',
         'ngay_nhan_viec',
         'chi_tiet',
+        'trang_thai',
     ];
     public function canBoGiao()
     {

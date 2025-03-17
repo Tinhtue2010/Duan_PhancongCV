@@ -80,15 +80,20 @@
                                             @endif
 
                                         </td>
-                                        @if (Auth::user()->quyen_han === 'CBQL2')
-                                            <td>
+                                        <td>
+                                            <button class="btn btn-primary" onclick="window.location.href='{{ route('bo-phan.can-bo-cua-bo-phan', ['ma_bo_phan' => $boPhan->ma_bo_phan]) }}'">
+                                                Cán bộ
+                                            </button>
+                                            
+                                            @if (Auth::user()->quyen_han === 'CBQL2')
                                                 <button class="btn btn-danger" data-bs-toggle="modal"
                                                     data-bs-target="#xoaModal" data-ma-bo-phan="{{ $boPhan->ma_bo_phan }}"
                                                     data-ten-bo-phan="{{ $boPhan->ten_bo_phan }}">
                                                     Xóa
                                                 </button>
-                                            </td>
-                                        @endif
+                                            @endif
+
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

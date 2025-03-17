@@ -36,7 +36,7 @@
                                     STT
                                 </th>
                                 <th>
-                                    Mã điều chuyển
+                                    Số
                                 </th>
                                 <th>
                                     Tên cán bộ
@@ -54,14 +54,13 @@
                             <tbody class="clickable-row">
                                 @foreach ($data as $index => $dieuChuyen)
                                     <tr data-ma-dieu-chuyen="{{ $dieuChuyen->ma_dieu_chuyen }}"
-                                        data-ma-can-bo="{{ $dieuChuyen->ma_can_bo }}"
+                                        data-ten-can-bo="{{ $dieuChuyen->ten_can_bo }}"
                                         data-thoi-gian-dieu-chuyen="{{ $dieuChuyen->thoi_gian_dieu_chuyen }}"
                                         data-ten-bo-phan-chuyen-den="{{ $dieuChuyen->ten_bo_phan }}"
                                         data-chuc-danh-moi="{{ $dieuChuyen->chuc_danh_moi }}"
-                                        data-ly-do="{{ $dieuChuyen->ly_do }}"
-                                        >
+                                        data-ly-do="{{ $dieuChuyen->ly_do }}">
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $dieuChuyen->ma_bo_phan }}</td>
+                                        <td>{{ $dieuChuyen->ma_dieu_chuyen }}</td>
                                         <td>{{ $dieuChuyen->ten_can_bo }}</td>
                                         <td>{{ $dieuChuyen->thoi_gian_dieu_chuyen }}</td>
                                         <td>{{ $dieuChuyen->ten_bo_phan }}</td>
@@ -90,16 +89,21 @@
                         <div class="row">
                             <div class="col-12">
                                 <p class="mt-2"><strong>Mã điều chuyển:</strong> <span id="modalMaDieuChuyen"></span></p>
-                                <input type="hidden" class="form-control" id="modalMaDieuChuyenInput" name="ma_bo_phan">
-
+                                <p class="mt-2"><strong>Tên cán bộ:</strong> <span id="modalTenCanBo"></span></p>
+                                <p class="mt-2"><strong>Thời gian điều chuyển:</strong> <span
+                                        id="modalThoiGianDieuChuyen"></span></p>
+                                <p class="mt-2"><strong>Tên bộ phận mới chuyển đến:</strong> <span
+                                        id="modalTenBoPhanChuyenDen"></span></p>
+                                <p class="mt-2"><strong>Chức danh mới:</strong> <span id="modalChucDanhMoi"></span></p>
+                                <p class="mt-2"><strong>Lý do:</strong> <span id="modalLyDo"></span></p>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        @if (Auth::user()->quyen_han === 'CBQL2')
+                        {{-- @if (Auth::user()->quyen_han === 'CBQL2')
                             <button type="submit" class="btn btn-success">Cập nhật</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                        @endif
+                        @endif --}}
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </form>
             </div>
@@ -128,8 +132,8 @@
                         </select>
 
                         <label class="mt-1" for="thoi_gian_dieu_chuyen"><strong>Thời gian điều chuyển</strong></label>
-                        <input type="text" class="form-control" name="thoi_gian_dieu_chuyen"
-                            max="50" placeholder="Nhập thời gian điều chuyển" required>
+                        <input type="text" class="form-control" name="thoi_gian_dieu_chuyen" max="50"
+                            placeholder="Nhập thời gian điều chuyển">
 
                         <label class="mt-1" for="ma_bo_phan_chuyen_den"><strong>Bộ phận chuyển đến</strong></label>
                         <select class="form-control" id="bo-phan-dropdown-search" name="ma_bo_phan_chuyen_den">
@@ -142,8 +146,8 @@
                         </select>
 
                         <label class="mt-1" for="chuc_danh_moi"><strong>Chức danh mới</strong></label>
-                        <input type="text" class="form-control" name="chuc_danh_moi"
-                            max="50" placeholder="Nhập chức danh mới" required>
+                        <input type="text" class="form-control" name="chuc_danh_moi" max="50"
+                            placeholder="Nhập chức danh mới">
 
                         <label class="mt-1" for="ly_do"><strong>Lý do</strong></label>
                         <select class="form-control" id="ly-do-dropdown-search" name="ly_do">
@@ -193,48 +197,28 @@
     </div>
     <script>
         $(document).ready(function() {
-            
-        });
 
+        });
     </script>
-    {{-- Script áp dụng cho 3 cột đầu --}}
     <script>
         $(document).ready(function() {
             $('#dataTable tbody').on('click', 'tr', function(event) {
-                if ($(event.target).closest('td:last-child').length) {
-                    return;
-                }
                 var maDieuChuyen = $(this).data('ma-dieu-chuyen');
-                var tenDieuChuyen = $(this).data('ten-dieu-chuyen');
-                var chucNangNhiemVu = $(this).data('chuc-nang-nhiem-vu');
-                var thoiGianGiaiThe = $(this).data('thoi-gian-giai-the');
-                var thoiGianThanhLap = $(this).data('thoi-gian-thanh-lap');
-                var trangThai = $(this).data('trang-thai');
+                var tenCanBo = $(this).data('ten-can-bo');
+                var thoiGianDieuChuyen = $(this).data('thoi-gian-dieu-chuyen');
+                var tenBoPhanChuyenDen = $(this).data('ten-bo-phan-chuyen-den');
+                var chucDanhMoi = $(this).data('chuc-danh-moi');
+                var lyDo = $(this).data('ly-do');
 
-                document.getElementById('modalMaDieuChuyen').value = maDieuChuyen;
-                document.getElementById('modalTenBoPhan').value = tenDieuChuyen;
-                document.getElementById('modalChucNangNhiemVu').value = chucNangNhiemVu;
+                document.getElementById('modalMaDieuChuyen').textContent = maDieuChuyen;
+                document.getElementById('modalTenCanBo').textContent = tenCanBo;
+                document.getElementById('modalThoiGianDieuChuyen').textContent = thoiGianDieuChuyen;
+                document.getElementById('modalTenBoPhanChuyenDen').textContent = tenBoPhanChuyenDen;
+                document.getElementById('modalChucDanhMoi').textContent = chucDanhMoi;
+                document.getElementById('modalLyDo').textContent = lyDo;
 
-                var thoiGianThanhLapFormatted = thoiGianThanhLap.split('-').reverse().join('/');
-                document.getElementById('modalThanhLap').value = thoiGianThanhLapFormatted;
-                var thoiGianThanhLapFormatted = thoiGianThanhLap.split('-').reverse().join('/');
-                document.getElementById('modalGiaiThe').value = thoiGianThanhLapFormatted;
-
-                // document.getElementById('modalTrangThai').value = trangThai;
-
-                const modalMaDieuChuyen = document.getElementById('modalMaDieuChuyen');
-                modalMaDieuChuyen.textContent = maDieuChuyen;
-
-                const selectTrangThai = document.getElementById('trang-thai-dropdown-search');
-                if (trangThai == 0) {
-                    selectTrangThai.value = "0";
-                } else {
-                    selectTrangThai.value = "1";
-                }
-
-
-                const modalInputMaDieuChuyen = document.getElementById('modalMaDieuChuyenInput');
-                modalInputMaDieuChuyen.value = maDieuChuyen;
+                // const modalInputMaDieuChuyen = document.getElementById('modalMaDieuChuyenInput');
+                // modalInputMaDieuChuyen.value = maDieuChuyen;
 
 
                 $('#thongTinModal').modal('show');
@@ -252,9 +236,6 @@
                 button.addEventListener('click', function() {
                     // Get data from the clicked button
                     const maDieuChuyen = this.getAttribute('data-ma-dieu-chuyen');
-                    const tenDieuChuyen = this.getAttribute('data-ten-dieu-chuyen');
-
-                    modalMaDieuChuyen.textContent = maDieuChuyen;
                     modalInputMaDieuChuyen.value = maDieuChuyen;
                 });
             });

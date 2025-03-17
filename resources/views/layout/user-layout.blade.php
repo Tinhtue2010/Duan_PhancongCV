@@ -160,6 +160,11 @@
                                         src="{{ asset('images/icons/officer.png') }}"></div>
                                 Danh sách điều chuyển
                             </a>
+                            <a class="nav-link" href="/quan-ly-phan-cong">
+                                <div class="sb-nav-link-icon"><img class="side-bar-icon"
+                                        src="{{ asset('images/icons/officer.png') }}"></div>
+                                Danh sách phân công
+                            </a>
                         @elseif (Auth::user()->quyen_han === 'Admin')
                             <div class="sb-sidenav-menu-heading">Quản lý thông tin</div>
                             <a class="nav-link" href="/quan-ly-tai-khoan">

@@ -15,7 +15,18 @@ class BoPhanController extends Controller
     public function danhSachBoPhan()
     {
         $data = BoPhan::orderBy('ma_bo_phan', 'desc')->get();
-        return view('quan-ly-khac.danh-sach-bo-phan', data: compact( 'data'));
+        return view('bo-phan.danh-sach-bo-phan', data: compact('data'));
+    }
+    public function canBoCuaBoPhan(Request $request)
+    {
+        $boPhan = BoPhan::find($request->ma_bo_phan);
+        $data = CanBo::where('ma_bo_phan', $request->ma_bo_phan)->join('tai_khoan', 'can_bo.ma_tai_khoan', '=', 'tai_khoan.ma_tai_khoan')
+            ->where('trang_thai', 1)->get();
+        $taiKhoans = TaiKhoan::where('quyen_han', 'Cán bộ')
+            ->doesntHave('canBo')
+            ->get();
+        $boPhans = BoPhan::all();
+        return view('bo-phan.can-bo-cua-bo-phan', data: compact('data', 'taiKhoans', 'boPhans', 'boPhan'));
     }
 
     public function themBoPhan(Request $request)
@@ -32,9 +43,17 @@ class BoPhanController extends Controller
     }
     public function xoaBoPhan(Request $request)
     {
-        BoPhan::find($request->ma_bo_phan)->delete();
-        session()->flash('alert-success', 'Xóa bộ phận thành công');
-        return redirect()->back();
+        $boPhan = BoPhan::where('bo_phan.ma_bo_phan', $request->ma_bo_phan)
+            ->join('can_bo', 'can_bo.ma_bo_phan', 'bo_phan.ma_bo_phan')
+            ->get();
+        if ($boPhan->isNotEmpty()) {
+            session()->flash('alert-danger', 'Bộ phận này vẫn còn công chức ở trong');
+            return redirect()->back();
+        } else {
+            BoPhan::find($request->ma_bo_phan)->delete();
+            session()->flash('alert-success', 'Xóa bộ phận thành công');
+            return redirect()->back();
+        }
     }
 
     public function updateBoPhan(Request $request)

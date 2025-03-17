@@ -25,13 +25,8 @@
                 <div class="card-header pt-3">
                     <div class="row">
                         <div class="col-9">
-                            <h4 class="font-weight-bold text-primary">Danh sách cán bộ</h4>
-                        </div>
-                        <div class="col-3">
-                            @if (Auth::user()->quyen_han === 'CBQL2' || Auth::user()->quyen_han === 'Admin')
-                                <button data-bs-toggle="modal" data-bs-target="#themModal"
-                                    class="btn btn-success float-end">Thêm cán bộ mới</button>
-                            @endif
+                            <h4 class="font-weight-bold text-primary">Danh sách cán bộ của bộ phận:
+                                {{ $boPhan->ten_bo_phan }}</h4>
                         </div>
                     </div>
                 </div>
@@ -147,7 +142,7 @@
                                         <select class="form-control" id="bo-phan-dropdown-search" name="ma_bo_phan">
                                             <option value=''></option>
                                             @foreach ($boPhans as $boPhan)
-                                                @if ($boPhan->ma_bo_phan == $canBo->ma_bo_phan)
+                                                @if (isset($canBo) && $boPhan->ma_bo_phan == $canBo->ma_bo_phan)
                                                     <option value="{{ $boPhan->ma_bo_phan }}" selected>
                                                         {{ $boPhan->ten_bo_phan }}
                                                     </option>
@@ -190,7 +185,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                        @if (Auth::user()->quyen_han === 'CBQL2' || Auth::user()->quyen_han === 'Admin')
+                            <button type="submit" class="btn btn-success">Cập nhật</button>
+                        @endif
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </form>

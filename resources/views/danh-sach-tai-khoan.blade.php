@@ -79,7 +79,7 @@
                     <h5 class="modal-title" id="thongTinModalLabel">Thông tin tài khoản</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.update-tai-khoan') }}" method="POST">
+                <form action="{{ route('tai-khoan.update-tai-khoan') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -108,7 +108,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Thêm tài khoản mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.them-tai-khoan') }}" method="POST">
+                <form action="{{ route('tai-khoan.them-tai-khoan') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">
@@ -148,7 +148,7 @@
                     <h4 class="modal-title">Xác nhận xóa tài khoản</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('quan-ly-khac.xoa-tai-khoan') }}" method="POST">
+                <form action="{{ route('tai-khoan.xoa-tai-khoan') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="modal-body">

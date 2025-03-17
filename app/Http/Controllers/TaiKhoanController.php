@@ -52,7 +52,7 @@ class TaiKhoanController extends Controller
     public function danhSachTaiKhoan()
     {
         $data = TaiKhoan::orderBy('ma_tai_khoan', 'desc')->get();
-        return view('quan-ly-khac.danh-sach-tai-khoan', data: compact(var_name: 'data'));
+        return view('danh-sach-tai-khoan', data: compact(var_name: 'data'));
     }
 
     public function themTaiKhoan(Request $request)
@@ -77,7 +77,7 @@ class TaiKhoanController extends Controller
 
     public function thayDoiMatKhau(Request $request)
     {
-        return view('quan-ly-khac.thay-doi-mat-khau');
+        return view('thay-doi-mat-khau');
     }
 
     public function xoaTaiKhoan(Request $request)
